@@ -10,23 +10,23 @@ app.get("/", function (req, res) {
 });
 
 //To serve the admin page
-app.get("/admin", function (req, res) {
+app.get("/admin.html", function (req, res) {
   res.sendFile("./view/admin.html", { root: __dirname });
 });
 //To serve ngo login page
-app.get("/ngo", function (req, res) {
+app.get("/ngologin.html", function (req, res) {
   res.sendFile("./view/ngologin.html", { root: __dirname });
 });
 //To serve ngo signup page
-app.get("/ngosignup", function (req, res) {
+app.get("/NGOsignup.php", function (req, res) {
   res.sendFile("./view/ngosignup.html", { root: __dirname });
 });
 //To serve donate page
-app.get("/Donate", function (req, res) {
+app.get("/donate.html", function (req, res) {
   res.sendFile("./view/Donate.html", { root: __dirname });
 });
 //To serve donatesignup page
-app.get("/Donatesignup", function (req, res) {
+app.get("/donatesignup.html", function (req, res) {
   res.sendFile("./view/donatesignup.html", { root: __dirname });
 });
 //to serve donation type-education
