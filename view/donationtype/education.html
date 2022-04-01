@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Education</title>
+    <link rel="stylesheet" href="/public/css/donationtype.css">
+
+  </head>
+  <body> <div class="container">
+    <div class="donation" data-aos="zoom-in-up" data-aos-duration="1000"
+    data-aos-easing="ease-in-out">
+        <h1>Education related donations here!</h1>
+        <form  id="donation" class="donation-data" method="post" >
+            <label for="text" >What are you aiming to donate</label>
+            <input type="text" id="danationtype" placeholder="Please enter your donation" name="typeofdonation"
+            required minlength="2" maxlength="100" />
+
+            <label for="type">Choose an item:</label>
+            <select name="type" id="type">
+              <option value="select">select</option>
+              <option value="school bag">school bag</option>
+              <option value="Note Books">Note Books</option>
+              <option value="stationary items">stationary items</option>
+              <option value="Water Bottle">Water Bottle</option>
+              <option value="Lunch Box">Lunch Box</option>
+              <option value="others">others</option>
+             </select>
+             <br>
+
+             <label for="textarea">Description</label>
+              <input type="textarea"  placeholder="Brief description about the donation"name="" id="">
+
+            <label for="quantity" >Quantity</label>
+            <input type="text" id="ngo-name" placeholder="please enter the quantity accordingly" name="ReceiveGoods"
+            required minlength="2" maxlength="100" />
+             
+
+          
+            
+       
+      
+            <button type="submit" name="submitid">donate</button>
+            
+        
+        </form>
+    </div></body>
+</html>

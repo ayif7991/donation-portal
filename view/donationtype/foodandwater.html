@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>foodandwater</title>
+    <link rel="stylesheet" href="/public/css/donationtype.css">
+
+  </head>
+  <body> <div class="container">
+    <div class="donation" data-aos="zoom-in-up" data-aos-duration="1000"
+    data-aos-easing="ease-in-out">
+        <h1>Food & Water donations here!</h1>
+        <form  id="donation" class="donation-data" method="post" >
+            <label for="text" >What are you aiming to donate</label>
+            <input type="text" id="danationtype" placeholder="Please enter your donation" name="typeofdonation"
+            required minlength="2" maxlength="100" />
+             
+            <label for="checkbox">Ready to serve</label>
+            <input type="checkbox" id="readytoserve" name="readytoserve" value="readytoserve">
+
+            <label for="quantity" >Quantity</label>
+            <input type="text" id="ngo-name" placeholder="please enter the quantity accordingly" name="ReceiveGoods"
+            required minlength="2" maxlength="100" />
+          
+            <label for="text" >Date of Expiry</label>
+            <input type="password" id="ngo-password" placeholder="Please ensure that the product you donate can be usable" name="Password"
+              />
+              <label for="w3review">Description</label>
+              <input type="textarea"  placeholder="Brief description about the donation"name="" id="">
+              
+            <button type="submit" name="submitid">donate</button>
+            
+        
+        </form>
+    </div></body>
+</html>

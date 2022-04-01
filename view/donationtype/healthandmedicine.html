@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>healthandmedicine</title>
+    <link rel="stylesheet" href="/public/css/donationtype.css">
+
+  </head>
+  <body> <div class="container">
+    <div class="donation" data-aos="zoom-in-up" data-aos-duration="1000"
+    data-aos-easing="ease-in-out">
+        <h1>Health related donations here!</h1>
+        <form  id="donation" class="donation-data" method="post" >
+            <label for="text" >What are you planning to donate</label>
+            <input type="text" id="danationtype" placeholder="Please enter your donation" name="typeofdonation"
+            required minlength="2" maxlength="100" />
+             
+            <label for="type">Choose an item:</label>
+            <select name="type" id="type">
+              <option value="select">select</option>
+              <option value="Vitamin tablets">Vitamin tablets</option>
+              <option value="Antibiotics">Antibiotics</option>
+              <option value="Paracetamol">Paracetamol</option>
+              <option value="Inhalers">Inhalers</option>
+              <option value="Antiacidity">Antiacidity</option>
+              <option value="others">others</option>
+             </select>
+             <br>
+
+             <label for="text">Name of tablet</label>
+            <input type="text" placeholder="Mention the name of tablet or health care product you want to donate">
+
+            <label for="text" >Date of Expiry</label>
+            <input type="password" id="ngo-password"
+             placeholder="Please ensure that the product you donate can be usable" name="Password"/>
+
+            <label for="quantity" >Amount you donate</label>
+            <input type="text" id="ngo-name" placeholder="please enter the quantity accordingly" name="ReceiveGoods"
+            required minlength="2" maxlength="100" />
+           
+            <label for="textarea">Description</label>
+              <input type="textarea"  placeholder="Brief description about the donation"name="" id="">
+
+            <button type="submit" name="submitid">donate</button>
+            
+        
+        </form>
+    </div></body>
+</html>

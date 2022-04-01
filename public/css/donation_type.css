@@ -1,0 +1,64 @@
+body {
+  background-color: grey;
+}
+
+/*--------------------------------------------HOW WE HELP----------------------------------------*/
+.product {
+  float: left;
+  background-image: url("images/poor.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding-bottom: 50px;
+  height: 100vh;
+  font-family: "Trebuchet MS", sans-serif;
+  color: white;
+}
+.product h2 {
+  font-size: 45px;
+  text-align: center;
+  padding: 20px;
+}
+.product .product_container {
+  display: flex;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.product .product_container .item {
+  width: 33%;
+  margin: 10px;
+  height: 10%;
+  background-color: black;
+  opacity: 80%;
+  border-radius: 50%;
+}
+.product .product_container .item:hover {
+  box-shadow: 0px 3px 65px 0px rgb(255, 189, 165);
+}
+.product .product_container .item .item_img {
+  width: 60%;
+  height: 20%;
+  overflow: hidden;
+  margin-left: 23%;
+}
+.product .product_container .item .item_img img {
+  width: 100%;
+  height: 10%;
+}
+.product .product_container .item .item_content {
+  text-align: center;
+}
+.product .product_container .item .item_content h3 {
+  font-size: 25px;
+  line-height: 2px;
+  color: rgb(79, 255, 88);
+  font-weight: bolder;
+}
+.product .product_container .item .item_content p {
+  font-size: 20px;
+  line-height: 25px;
+  width: 80%;
+  text-align: center;
+  padding-left: 20%;
+}
