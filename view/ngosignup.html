@@ -27,24 +27,24 @@ input:focus {
         data-aos-easing="ease-in-out"> 
         <h1>Sign Up</h1>
             
-            <form id="sign-up-data" class="sign-up-data" method="post" action="NGOsignup.php" >
+            <form id="sign-up-data" class="sign-up-data" method="post" action="ngo-signup" >
                 
                 <label for="text" >NGO Name</label>
-                <input type="text" id="name" placeholder="Full name" name="NGOName"
+                <input type="text" id="name" placeholder="Full name" name="ngoName"
                 required minlength="2" maxlength="100" />
                 <label for="text" >Contact</label>
-                <input type="tel" id="phone" placeholder="555-555-5555" name="Contact"
+                <input type="tel" id="phone" placeholder="XXX-XXX-XXXX" name="Contact"
                 required pattern="[0-9]{3}[0-9]{3}[0-9]{4}" />
                 <label for="text" >Email Address</label>
                 <input type="email" id="email" placeholder="email@address.com" name="Email" required />
                 <label for="text" >Location</label>
                 <textarea type="text" placeholder=" enter location" name="Location"></textarea>
                 <label for="text" >Password</label>
-                <input type="password" id="password1" placeholder="Create Password (Min. 8 Characters)" name="Password"
+                <input type="password" id="password1" placeholder="Create Password (Min. 8 Characters)" name="password"
                 required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" title="please include 1 uppercase Character,1 lowercase Character and 1 number. "
           />
                 <label for="text" >Confirm Password</label>
-                <input type="password" id="password2" placeholder="Create Password (Min. 8 Characters)" name="ConfirmPassword"
+                <input type="password" id="password2" placeholder="Create Password (Min. 8 Characters)" name="confirmPassword"
                 required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" title="please include 1 uppercase Character,1 lowercase Character and 1 number. "
           />
                 <button type="submit" name="submitsignup" >SignUp</button>
@@ -52,10 +52,10 @@ input:focus {
         </div>
     </div>    
     </div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init();
     </script>
-    <script src="ngologin-signupScript.js"></script>
+    <!--  <script src="ngologin-signupScript.js"></script> -->
 </body>
 </html>
