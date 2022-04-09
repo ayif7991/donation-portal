@@ -1,6 +1,9 @@
+//var popupS = require("popups");
 const express = require("express"),
+  mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo");
 const app = express();
+//var db = require("./db");
 const port = 3000;
 
 app.use(express.json());
@@ -20,27 +23,11 @@ app.get("/admin", function (req, res) {
 });
 
 app.get("/testmongo", async function (req, res) {
-  const mongoose = require("mongoose");
-  console.log("inside tes2t");
-  const ngoModel = require("./src/models/ngo");
-  console.log("inside test1");
-  const donorModel = require(".src/models/donor");
-  const eduModel = require(".src/models/edu");
-  const foodModel = require(".src/models/food");
-  const healthModel = require(".src/models/health");
-
-  console.log("inside test");
-  try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/portal");
-    console.log("succeess");
-
-    ngoModel.findOne(function (error, result) {
-      console.log("resultttt");
-      console.log(result);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  ngoModel.findOne(function (error, result) {
+    console.log("resultttt");
+    console.log(result);
+    res.send(result);
+  });
 });
 
 //To serve ngo login page
@@ -51,20 +38,32 @@ app.get("/ngo-login", function (req, res) {
 app.get("/ngo-signup", function (req, res) {
   res.sendFile("./view/ngosignup.html", { root: __dirname });
 });
-app.post("/ngo-signup", function (req, res) {
-  if (req.body.password === req.body.confirmationPassword) {
-    res.send("Passwords are not matching");
-    console.log("oke done");
+app.post("/ngo-signup", async function (req, res) {
+  try {
+    console.log(req.body);
+    let password = req.body.password;
+    let confPassword = req.body.confirmpassword;
+    if (password === confPassword) {
+      const newNgoDoc = new ngoModel({
+        name: req.body.ngoName,
+        contact: req.body.Contact,
+        email: req.body.Email,
+        location: req.body.Location,
+        password: req.body.password,
+      });
+
+      await newNgoDoc.save();
+      res.send("success");
+    } else {
+      res.send("mismatch password");
+    }
+  } catch (error) {
+    res.status(400).send(error);
   }
 
-  let newNgo = new ngoModel({
-    name: req.body.ngoName,
-  });
-  // newNgo.save();
-  console.log(password);
-  res.send(req.body);
+  // console.log(password);
+  // res.send(req.body);
 });
-
 //To serve donate page
 app.get("/donate", function (req, res) {
   res.sendFile("./view/Donate.html", { root: __dirname });

@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.6",
+    "alert": "^5.0.10",
     "express": "^4.17.3",
-    "hbs": "^4.2.0",
-    "nodemon": "^2.0.15"
+    "mongoose": "^6.2.9",
+    "nodemon": "^2.0.15",
+    "popups": "^1.1.3"
   }
 }

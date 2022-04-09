@@ -23,10 +23,6 @@ const ngoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  confirmpassword: {
-    type: String,
-    required: true,
-  },
 });
 
 const ngoModel = mongoose.model("Ngo", ngoSchema);
