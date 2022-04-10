@@ -25,14 +25,14 @@
         class="donate-form"
         data-aos-easing="ease-in-out"
         method="post"
-        action="donate.php"
+        action="donate-signup"
       >
         <label for="text">Name</label>
         <input
           type="text"
           id="name"
           placeholder="Full name"
-          name="Name"
+          name="donorname"
           required
           minlength="2"
           maxlength="100"
@@ -43,7 +43,7 @@
           type="tel"
           id="phone"
           placeholder="Enter a 10 digit number"
-          name="Phone"
+          name="phone"
           required
           pattern="[0-9]{10}"
         />
@@ -68,7 +68,7 @@
           type="password"
           id="ngo-password"
           placeholder="Create Password (Min. 8 Characters)"
-          name="Password"
+          name="password"
           required
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
           title="please include 1 uppercase Character,1 lowercase Character and 1 number. "
@@ -77,7 +77,7 @@
         <input
           type="password"
           id="ngo-password"
-          placeholder="Confirm Password "
+          placeholder="confirmpassword "
           name="Password"
           required
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"

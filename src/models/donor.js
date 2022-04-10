@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ngoSchema = new mongoose.Schema({
+const donorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -20,10 +20,6 @@ const ngoSchema = new mongoose.Schema({
     required: true,
   },
   password: {
-    type: String,
-    required: true,
-  },
-  confirmpassword: {
     type: String,
     required: true,
   },
