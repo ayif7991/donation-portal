@@ -1,0 +1,51 @@
+STATIC PAGES
+************
+1.index page{
+  home 
+  about
+  ngo
+  donor
+  admin
+}
+2.Admin login page
+3.ngo login page
+4.ngo signup page
+5.donate page
+6.donate signup page
+7.donatiotyppe
+ a-f&w
+ b-h&m
+ c-edu
+8.donationtype
+DB CREATION
+***********
+1.create a connection
+
+ ngo and donor db table
+**********************
+name   -->string 
+contact-->number,unique
+email  -->string ,unique:true
+location -->string 	
+password & confirm password-->string
+
+type of donation db table
+*************************
+
+aim  --> string
+name -->string
+quantity -->number
+doe -->number
+desc -->string
+
+db created
+**********
+ngo signup
+_________________________
+
+ngo signup --> ngo login -->
+{
+  name =>hashed
+  password =>QWEqwe123
+  fbkjdhkjf
+}

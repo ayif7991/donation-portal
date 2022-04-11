@@ -105,6 +105,26 @@ app.post("/ngo-signup", async function (req, res) {
 app.get("/donate", function (req, res) {
   res.sendFile("./view/Donate.html", { root: __dirname });
 });
+app.post("/donate", async function (req, res) {
+  try {
+    const name = req.body.donorname;
+    const password = req.body.password;
+    //console.log(`${name}${password}`);
+
+    const newdonor = await donorModel.findOne({ name: name });
+    console.log(newdonor);
+    bcrypt.compare(password, newdonor.password, (err, data) => {
+      if (err) throw err;
+      if (data) {
+        return res.status(200).json({ msg: "Login success" });
+      } else {
+        return res.status(401).json({ msg: "Invalid credencial" });
+      }
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 //To serve donatesignup page
 app.get("/donate-signup", function (req, res) {
   res.sendFile("./view/donatesignup.html", { root: __dirname });
@@ -113,23 +133,23 @@ app.post("/donate-signup", async function (req, res) {
   try {
     console.log(req.body);
     let password = req.body.password;
-    let confPassword = req.body.password;
+    let confPassword = req.body.confirmpassword;
     if (password === confPassword) {
       const salt = await bcrypt.genSalt(10);
-      hashedpassword = await bcrypt.hash(password, salt);
-      password = hashedpassword;
+      hasheddpassword = await bcrypt.hash(password, salt);
+
       const newdonorDoc = new donorModel({
         name: req.body.donorname,
         contact: req.body.phone,
         email: req.body.Email,
         location: req.body.Address,
-        password: req.body.password,
+        password: hasheddpassword,
       });
       console.log("to save");
       newdonorDoc
         .save()
         .then(function (data) {
-          console.log("insrert success");
+          console.log("insert success");
 
           res.send("successdonor");
         })
