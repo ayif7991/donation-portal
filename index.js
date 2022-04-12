@@ -4,7 +4,9 @@ const bcrypt = require("bcrypt");
 const express = require("express"),
   mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo"),
-  donorModel = require("./src/models/donor");
+  donorModel = require("./src/models/donor"),
+  adminModel = require("./src/models/admin");
+const { render } = require("express/lib/response");
 const res = require("express/lib/response");
 const app = express();
 //var db = require("./db");
@@ -25,6 +27,21 @@ app.get("/", function (req, res) {
 app.get("/admin", function (req, res) {
   res.sendFile("./view/admin.html", { root: __dirname });
 });
+app.post("/admin", async function (req, res) {
+  let name = req.body.name;
+  let password = req.body.password;
+  console.log(req.body);
+
+  if (name === "admin" && password === "admin123") {
+    console.log("oke fine");
+    return res.sendFile("./view/adminview.html", { root: __dirname });
+  } else {
+    return res.send("error credentials");
+  }
+
+  // console.log("oke fine");
+  // return res.sendFile("./view/adminview.html", { root: __dirname });
+});
 
 app.get("/testmongo", async function (req, res) {
   ngoModel.findOne(function (error, result) {
@@ -44,7 +61,6 @@ app.post("/ngo-login", async function (req, res) {
   try {
     const name = req.body.ngoName;
     const password = req.body.password;
-
     const newngo = await ngoModel.findOne({ name: name });
     console.log(newngo);
 
@@ -116,6 +132,8 @@ app.post("/donate", async function (req, res) {
     bcrypt.compare(password, newdonor.password, (err, data) => {
       if (err) throw err;
       if (data) {
+        //
+        res.sendFile("./view/donor-table", { root: __dirname });
         return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
