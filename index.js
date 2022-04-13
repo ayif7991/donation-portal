@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const express = require("express"),
   mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo"),
-  donorModel = require("./src/models/donor"),
-  adminModel = require("./src/models/admin");
+  donorModel = require("./src/models/donor");
+//adminModel = require("./src/models/admin");
 const { render } = require("express/lib/response");
 const res = require("express/lib/response");
 const app = express();
@@ -61,22 +61,39 @@ app.post("/ngo-login", async function (req, res) {
   try {
     const name = req.body.ngoName;
     const password = req.body.password;
-    const newngo = await ngoModel.findOne({ name: name });
-    console.log(newngo);
-
-    bcrypt.compare(password, newngo.password, (err, data) => {
+    const presentngo = await ngoModel.findOne({ name: name });
+    console.log(presentngo);
+    bcrypt.compare(password, presentngo.password, (err, data) => {
       if (err) throw err;
       if (data) {
-        return res.status(200).json({ msg: "Login success" });
+        //console.log(req.body);
+
+        //var details = ngoModel.find({});
+
+        // details.exec(function (err, data) {
+        //   if (err) throw err;
+        //   ngoModel.fetchData(function (data) {
+        //     res.render("user-table", { userData: data });
+        //   });
+        // });
+
+        ngoModel.find({}, function (err, data) {
+          // app.engine("ejs", require("ejs").renderFile);
+          // app.set("view engine", "ejs");
+          res.render("./view/ngo-table.ejs");
+        });
+        //console.log(details);
+        // return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
       }
     });
-    // console.log(`${name}${password}`);
+    console.log(`${name}${password}`);
   } catch (error) {
     res.status(400).send(error);
   }
 });
+
 //To serve ngo signup page
 app.get("/ngo-signup", function (req, res) {
   res.sendFile("./view/ngosignup.html", { root: __dirname });
@@ -133,7 +150,7 @@ app.post("/donate", async function (req, res) {
       if (err) throw err;
       if (data) {
         //
-        res.sendFile("./view/donor-table", { root: __dirname });
+        //res.sendFile("./view/donor-table", { root: __dirname });
         return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
@@ -185,6 +202,7 @@ app.post("/donate-signup", async function (req, res) {
   // console.log(password);
   // res.send(req.body);
 });
+
 //to serve donation type-education
 app.get("/Donationtype/education", function (req, res) {
   res.sendFile("./view/donationtype/education.html", { root: __dirname });

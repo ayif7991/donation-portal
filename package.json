@@ -12,6 +12,7 @@
   "dependencies": {
     "alert": "^5.0.10",
     "bcrypt": "^5.0.1",
+    "ejs": "^3.0.2",
     "express": "^4.17.3",
     "mongoose": "^6.2.9",
     "nodemon": "^2.0.15",
