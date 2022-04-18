@@ -42,13 +42,40 @@ app.post("/admin", async function (req, res) {
   // console.log("oke fine");
   // return res.sendFile("./view/adminview.html", { root: __dirname });
 });
+app.get("/admin/donor", function (req, res) {
+  console.log("we are seeing donor table");
+  res.render("donor-table.ejs", {
+    userData: data,
+  });
+});
 
 app.get("/testmongo", async function (req, res) {
-  ngoModel.findOne(function (error, result) {
-    console.log("resultttt");
-    console.log(result);
-    res.send(result);
-  });
+  // app.set("view engine", "ejs");
+  // var datas = [
+  //   {
+  //     name: "Sammy",
+  //     organization: "DigitalOcean",
+  //     birth_year: 2012,
+  //   },
+  //   {
+  //     name: "Tux",
+  //     organization: "Linux",
+  //     birth_year: 1996,
+  //   },
+  //   {
+  //     name: "Moby",
+  //     organization: "Docker",
+  //     birth_year: 2013,
+  //   },
+  // ];
+  // res.render("ngo-table.ejs", {
+  //   userData: datas,
+  // });
+  // ngoModel.findOne(function(error, result) {
+  //   console.log("resultttt");
+  //   console.log(result);
+  //   res.send(result);
+  // });
 });
 
 //To serve ngo login page
@@ -59,36 +86,33 @@ app.get("/ngo-login", function (req, res) {
 
 app.post("/ngo-login", async function (req, res) {
   try {
-    const name = req.body.ngoName;
+    const email = req.body.email;
     const password = req.body.password;
-    const presentngo = await ngoModel.findOne({ name: name });
+    const presentngo = await ngoModel.findOne({ email: email });
     console.log(presentngo);
     bcrypt.compare(password, presentngo.password, (err, data) => {
       if (err) throw err;
       if (data) {
-        //console.log(req.body);
-
-        //var details = ngoModel.find({});
-
-        // details.exec(function (err, data) {
-        //   if (err) throw err;
-        //   ngoModel.fetchData(function (data) {
-        //     res.render("user-table", { userData: data });
-        //   });
-        // });
+        console.log(req.body);
 
         ngoModel.find({}, function (err, data) {
-          // app.engine("ejs", require("ejs").renderFile);
-          // app.set("view engine", "ejs");
-          res.render("./view/ngo-table.ejs");
+          console.log(err);
+          console.log(data);
+
+          app.set("view engine", "ejs");
+          var userData = ngoModel.find({});
+
+          res.render("ngo-table.ejs", {
+            userData: data,
+          });
         });
-        //console.log(details);
-        // return res.status(200).json({ msg: "Login success" });
+
+        //return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
       }
     });
-    console.log(`${name}${password}`);
+    //console.log(`${name}${password}`);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -140,18 +164,27 @@ app.get("/donate", function (req, res) {
 });
 app.post("/donate", async function (req, res) {
   try {
-    const name = req.body.donorname;
+    const email = req.body.email;
     const password = req.body.password;
     //console.log(`${name}${password}`);
 
-    const newdonor = await donorModel.findOne({ name: name });
+    const newdonor = await donorModel.findOne({ email: email });
     console.log(newdonor);
     bcrypt.compare(password, newdonor.password, (err, data) => {
       if (err) throw err;
       if (data) {
-        //
-        //res.sendFile("./view/donor-table", { root: __dirname });
-        return res.status(200).json({ msg: "Login success" });
+        donorModel.find({}, function (err, data) {
+          console.log(err);
+          console.log(data);
+
+          app.set("view engine", "ejs");
+          var userData = donorModel.find({});
+
+          res.render("donor-table.ejs", {
+            userData: data,
+          });
+        });
+        // return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
       }

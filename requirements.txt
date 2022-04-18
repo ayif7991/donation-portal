@@ -1,11 +1,11 @@
-STATIC PAGES
-************
-1.index page{
-  home 
-  about
-  ngo
-  donor
-  admin
+STATIC PAGES                 ROUTES
+************                 ******
+1.index page{                 /
+  home                        /#home
+  about                       /#about
+  ngo                         /ngo-login    /ngo-signup
+  donor                       /donate       /donate-signup
+  admin                       /admin
 }
 2.Admin login page
 3.ngo login page
@@ -40,12 +40,16 @@ desc -->string
 
 db created
 **********
-ngo signup
+ngo signup with login
+donar signup with logn
 _________________________
 
 ngo signup --> ngo login -->
 {
   name =>hashed
   password =>QWEqwe123
-  fbkjdhkjf
 }
+TO DO:
+session(acl)
+ login validation 
+ themeintegration
