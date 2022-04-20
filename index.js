@@ -34,7 +34,7 @@ app.post("/admin", async function (req, res) {
 
   if (name === "admin" && password === "admin123") {
     console.log("oke fine");
-    return res.sendFile("./view/adminview.html", { root: __dirname });
+    res.render("adminview.ejs");
   } else {
     return res.send("error credentials");
   }
@@ -50,7 +50,7 @@ app.get("/admin/donor", function (req, res) {
 });
 
 app.get("/testmongo", async function (req, res) {
-  // app.set("view engine", "ejs");
+  //app.set("view engine", "ejs");
   // var datas = [
   //   {
   //     name: "Sammy",
@@ -68,8 +68,9 @@ app.get("/testmongo", async function (req, res) {
   //     birth_year: 2013,
   //   },
   // ];
-  // res.render("ngo-table.ejs", {
-  //   userData: datas,
+  res.render("admin.ejs");
+  console.log("resultttt");
+  //  , { userData: datas,
   // });
   // ngoModel.findOne(function(error, result) {
   //   console.log("resultttt");
