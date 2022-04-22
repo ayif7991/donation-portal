@@ -62,14 +62,14 @@ app.get("/testmongo", async function (req, res) {
   //     birth_year: 2013,
   //   },
   // ];
-  donorModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
-    var userData = donorModel.find({});
-    res.render("donor-list.ejs", {
-      userData: data,
-    });
-  });
-  console.log("resultttt");
+  // donorModel.find({}, function (err, data) {
+  //   app.set("view engine", "ejs");
+  //   var userData = donorModel.find({});
+  //   res.render("donor-list.ejs", {
+  //     userData: data,
+  //   });
+  // });
+  // console.log("resultttt");
   //  , { userData: datas,
   // });
   // ngoModel.findOne(function(error, result) {
@@ -77,6 +77,7 @@ app.get("/testmongo", async function (req, res) {
   //   console.log(result);
   //   res.send(result);
   // });
+  // res.sendFile("./views/ngo-register.html", { root: __dirname });
 });
 app.get("/ngo-list", function (req, res) {
   ngoModel.find({}, function (err, data) {
@@ -102,7 +103,7 @@ app.get("/index", function (req, res) {
 //To serve ngo login page
 app.get("/ngo-login", function (req, res) {
   console.log("login page");
-  res.sendFile("./view/ngologin.html", { root: __dirname });
+  res.sendFile("./views/ngo-login.html", { root: __dirname });
 });
 
 app.post("/ngo-login", async function (req, res) {
@@ -116,19 +117,19 @@ app.post("/ngo-login", async function (req, res) {
       if (data) {
         console.log(req.body);
 
-        ngoModel.find({}, function (err, data) {
-          console.log(err);
-          console.log(data);
+        // ngoModel.find({}, function (err, data) {
+        //   console.log(err);
+        //   console.log(data);
 
-          app.set("view engine", "ejs");
-          var userData = ngoModel.find({});
+        //   app.set("view engine", "ejs");
+        //   var userData = ngoModel.find({});
 
-          res.render("ngo-table.ejs", {
-            userData: data,
-          });
-        });
+        //   res.render("ngo-table.ejs", {
+        //     userData: data,
+        //   });
+        // });
 
-        //return res.status(200).json({ msg: "Login success" });
+        return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
       }
@@ -140,10 +141,10 @@ app.post("/ngo-login", async function (req, res) {
 });
 
 //To serve ngo signup page
-app.get("/ngo-signup", function (req, res) {
-  res.sendFile("./view/ngosignup.html", { root: __dirname });
+app.get("/ngo-register", function (req, res) {
+  res.sendFile("./views/ngo-register.html", { root: __dirname });
 });
-app.post("/ngo-signup", async function (req, res) {
+app.post("/ngo-register", async function (req, res) {
   try {
     console.log(req.body);
     let password = req.body.password;
@@ -153,8 +154,9 @@ app.post("/ngo-signup", async function (req, res) {
       hashedpassword = await bcrypt.hash(password, salt);
       const newNgoDoc = new ngoModel({
         name: req.body.ngoName,
-        contact: req.body.Contact,
-        email: req.body.Email,
+        email: req.body.email,
+        username: req.body.username,
+        contact: req.body.contact,
         location: req.body.Location,
         password: hashedpassword,
       });
@@ -177,13 +179,13 @@ app.post("/ngo-signup", async function (req, res) {
   }
 
   // console.log(password);
-  // res.send(req.body);
+  res.send(req.body);
 });
 //To serve donate page
-app.get("/donate", function (req, res) {
-  res.sendFile("./view/Donate.html", { root: __dirname });
+app.get("/donor-login", function (req, res) {
+  res.sendFile("./views/donor-login.html", { root: __dirname });
 });
-app.post("/donate", async function (req, res) {
+app.post("/donor-login", async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
@@ -215,10 +217,10 @@ app.post("/donate", async function (req, res) {
   }
 });
 //To serve donatesignup page
-app.get("/donate-signup", function (req, res) {
-  res.sendFile("./view/donatesignup.html", { root: __dirname });
+app.get("/donor-register", function (req, res) {
+  res.sendFile("./views/donor-register.html", { root: __dirname });
 });
-app.post("/donate-signup", async function (req, res) {
+app.post("/donor-register", async function (req, res) {
   try {
     console.log(req.body);
     let password = req.body.password;
