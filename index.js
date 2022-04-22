@@ -25,7 +25,7 @@ app.get("/", function (req, res) {
 
 //To serve the admin page
 app.get("/admin", function (req, res) {
-  res.sendFile("./view/admin.html", { root: __dirname });
+  res.render("admin.ejs");
 });
 app.post("/admin", async function (req, res) {
   let name = req.body.name;
@@ -36,17 +36,11 @@ app.post("/admin", async function (req, res) {
     console.log("oke fine");
     res.render("adminview.ejs");
   } else {
-    return res.send("error credentials");
+    return res.render("pages-error-404.ejs");
   }
 
   // console.log("oke fine");
   // return res.sendFile("./view/adminview.html", { root: __dirname });
-});
-app.get("/admin/donor", function (req, res) {
-  console.log("we are seeing donor table");
-  res.render("donor-table.ejs", {
-    userData: data,
-  });
 });
 
 app.get("/testmongo", async function (req, res) {
@@ -68,7 +62,13 @@ app.get("/testmongo", async function (req, res) {
   //     birth_year: 2013,
   //   },
   // ];
-  res.render("admin.ejs");
+  donorModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = donorModel.find({});
+    res.render("donor-list.ejs", {
+      userData: data,
+    });
+  });
   console.log("resultttt");
   //  , { userData: datas,
   // });
@@ -78,7 +78,24 @@ app.get("/testmongo", async function (req, res) {
   //   res.send(result);
   // });
 });
-
+app.get("/ngo-list", function (req, res) {
+  ngoModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = ngoModel.find({});
+    res.render("ngo-list.ejs", {
+      userData: data,
+    });
+  });
+});
+app.get("/donor-list", function (req, res) {
+  donorModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = donorModel.find({});
+    res.render("donor-list.ejs", {
+      userData: data,
+    });
+  });
+});
 //To serve ngo login page
 app.get("/ngo-login", function (req, res) {
   console.log("login page");
