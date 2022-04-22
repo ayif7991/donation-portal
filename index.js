@@ -96,6 +96,9 @@ app.get("/donor-list", function (req, res) {
     });
   });
 });
+app.get("/index", function (req, res) {
+  res.sendFile("./views/index.html", { root: __dirname });
+});
 //To serve ngo login page
 app.get("/ngo-login", function (req, res) {
   console.log("login page");
