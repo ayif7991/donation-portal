@@ -4,8 +4,11 @@ const bcrypt = require("bcrypt");
 const express = require("express"),
   mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo"),
-  donorModel = require("./src/models/donor");
-//adminModel = require("./src/models/admin");
+  donorModel = require("./src/models/donor"),
+  healthModel = require("./src/models/health"),
+  eduModel = require("./src/models/edu"),
+  foodModel = require("./src/models/food");
+
 const { render } = require("express/lib/response");
 const res = require("express/lib/response");
 const app = express();
@@ -44,50 +47,73 @@ app.post("/admin", async function (req, res) {
 });
 
 app.get("/testmongo", async function (req, res) {
-  //app.set("view engine", "ejs");
-  // var datas = [
-  //   {
-  //     name: "Sammy",
-  //     organization: "DigitalOcean",
-  //     birth_year: 2012,
-  //   },
-  //   {
-  //     name: "Tux",
-  //     organization: "Linux",
-  //     birth_year: 1996,
-  //   },
-  //   {
-  //     name: "Moby",
-  //     organization: "Docker",
-  //     birth_year: 2013,
-  //   },
-  // ];
   // donorModel.find({}, function (err, data) {
   //   app.set("view engine", "ejs");
   //   var userData = donorModel.find({});
-  //   res.render("donor-list.ejs", {
+  //   res.render("check.ejs", {
   //     userData: data,
   //   });
   // });
-  // console.log("resultttt");
-  //  , { userData: datas,
-  // });
-  // ngoModel.findOne(function(error, result) {
-  //   console.log("resultttt");
-  //   console.log(result);
-  //   res.send(result);
-  // });
-  // res.sendFile("./views/ngo-register.html", { root: __dirname });
+  //res.render("ngo-view.ejs");
+  res.sendFile("./views/donate-health.html", { root: __dirname });
 });
-app.get("/ngo-list", function (req, res) {
-  ngoModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
-    var userData = ngoModel.find({});
-    res.render("ngo-list.ejs", {
-      userData: data,
-    });
+app.get("/donor-profile", async function (req, res) {
+  res.render("donor-profile.ejs");
+});
+app.get("/donate-health", async function (req, res) {
+  console.log("donate");
+  res.sendFile("./views/donate-health.html", { root: __dirname });
+});
+app.get("/donate-food&water", async function (req, res) {
+  console.log("donate");
+  res.sendFile("./views/donate-food&water.html", { root: __dirname });
+});
+app.get("/donate-education", async function (req, res) {
+  console.log("donate");
+  res.sendFile("./views/donate-education.html", { root: __dirname });
+});
+app.post("/donate-health", function (req, res) {
+  console.log(req.body);
+  const newhealthDoc = new healthModel({
+    aim: req.body.aim,
+    select: req.body.select,
+    specific: req.body.specific,
+    quantity: req.body.quantity,
+    doe: req.body.doe,
+    desc: req.body.desc,
+    dod: req.body.dod,
   });
+  newhealthDoc.save();
+  res.send("success");
 });
+app.post("/donate-education", function (req, res) {
+  console.log(req.body);
+  const neweduDoc = new eduModel({
+    aim: req.body.aim,
+    select: req.body.select,
+    specific: req.body.specific,
+    quantity: req.body.quantity,
+    desc: req.body.desc,
+    dod: req.body.dod,
+  });
+  neweduDoc.save();
+  res.send("success");
+});
+app.post("/donate-food&water", function (req, res) {
+  console.log(req.body);
+  const newfoodDoc = new foodModel({
+    aim: req.body.aim,
+    select: req.body.select,
+    specific: req.body.specific,
+    quantity: req.body.quantity,
+    doe: req.body.doe,
+    desc: req.body.desc,
+    dod: req.body.dod,
+  });
+  newfoodDoc.save();
+  res.send("success");
+});
+
 app.get("/donor-list", function (req, res) {
   donorModel.find({}, function (err, data) {
     app.set("view engine", "ejs");
@@ -131,7 +157,8 @@ app.post("/ngo-login", async function (req, res) {
 
         return res.status(200).json({ msg: "Login success" });
       } else {
-        return res.status(401).json({ msg: "Invalid credencial" });
+        return res.render("pages-error-404.ejs");
+        // return res.status(401).json({ msg: "Invalid credencial" });
       }
     });
     //console.log(`${name}${password}`);
@@ -189,27 +216,16 @@ app.post("/donor-login", async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    //console.log(`${name}${password}`);
-
-    const newdonor = await donorModel.findOne({ email: email });
-    console.log(newdonor);
-    bcrypt.compare(password, newdonor.password, (err, data) => {
+    console.log(`${email}${password}`);
+    const donor = await donorModel.findOne({ email: email });
+    console.log("donor");
+    bcrypt.compare(password, donor.password, (err, data) => {
       if (err) throw err;
       if (data) {
-        donorModel.find({}, function (err, data) {
-          console.log(err);
-          console.log(data);
-
-          app.set("view engine", "ejs");
-          var userData = donorModel.find({});
-
-          res.render("donor-table.ejs", {
-            userData: data,
-          });
-        });
-        // return res.status(200).json({ msg: "Login success" });
+        return res.status(200).json({ msg: "Login success" });
       } else {
         return res.status(401).json({ msg: "Invalid credencial" });
+        // return res.render("pages-error-404.ejs");
       }
     });
   } catch (error) {
@@ -227,32 +243,33 @@ app.post("/donor-register", async function (req, res) {
     let confPassword = req.body.confirmpassword;
     if (password === confPassword) {
       const salt = await bcrypt.genSalt(10);
-      hasheddpassword = await bcrypt.hash(password, salt);
+      hashedpassword = await bcrypt.hash(password, salt);
 
       const newdonorDoc = new donorModel({
         name: req.body.donorname,
-        contact: req.body.phone,
-        email: req.body.Email,
-        location: req.body.Address,
-        password: hasheddpassword,
+        email: req.body.email,
+        username: req.body.username,
+        contact: req.body.contact,
+        location: req.body.location,
+        password: hashedpassword,
       });
-      console.log("to save");
-      newdonorDoc
-        .save()
-        .then(function (data) {
-          console.log("insert success");
 
-          res.send("successdonor");
-        })
-        .catch(function (err) {
-          console.log("error");
-        });
+      console.log("to save");
+      try {
+        let x = await newdonorDoc.save();
+      } catch (err) {
+        res.send({});
+        console.log("save errror");
+        console.log("err", err);
+      }
+
+      res.send("success");
     } else {
       res.send("mismatch password");
     }
-  } catch (error) {
-    console.log("here");
-    res.status(400).send(error);
+  } catch (err) {
+    console.error("dono-signup failed", err);
+    res.status(400).send(err);
   }
 
   // console.log(password);

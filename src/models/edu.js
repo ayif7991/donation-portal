@@ -1,20 +1,24 @@
 const mongoose = require("mongoose");
 
-const ngoSchema = new mongoose.Schema({
+const eduSchema = new mongoose.Schema({
   aim: {
     type: String,
-    required: true,
+  },
+  select: {
+    type: String,
+  },
+  specific: {
+    type: String,
   },
   quantity: {
     type: Number,
-    required: true,
   },
-  doe: {
-    type: Number,
-    required: true,
-  },
+
   desc: {
     type: String,
+  },
+  dod: {
+    type: Date,
   },
 });
 

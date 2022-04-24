@@ -1,24 +1,26 @@
 const mongoose = require("mongoose");
 
-const ngoSchema = new mongoose.Schema({
+const healthSchema = new mongoose.Schema({
   aim: {
     type: String,
-    required: true,
   },
-  name: {
+  select: {
     type: String,
-    required: true,
+  },
+  specific: {
+    type: String,
   },
   quantity: {
     type: Number,
-    required: true,
   },
   doe: {
-    type: Number,
-    required: true,
+    type: Date,
   },
   desc: {
     type: String,
+  },
+  dod: {
+    type: Date,
   },
 });
 

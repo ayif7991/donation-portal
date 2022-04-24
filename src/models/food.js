@@ -1,16 +1,23 @@
 const mongoose = require("mongoose");
 
-const ngoSchema = new mongoose.Schema({
+const foodSchema = new mongoose.Schema({
   aim: {
     type: String,
-    required: true,
   },
-  desc: {
+  specify: {
     type: String,
   },
   quantity: {
     type: Number,
-    required: true,
+  },
+  doe: {
+    type: Date,
+  },
+  desc: {
+    type: String,
+  },
+  dod: {
+    type: Date,
   },
 });
 
