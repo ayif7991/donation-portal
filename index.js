@@ -46,16 +46,33 @@ app.post("/admin", async function (req, res) {
   // return res.sendFile("./view/adminview.html", { root: __dirname });
 });
 
-app.get("/testmongo", async function (req, res) {
-  // donorModel.find({}, function (err, data) {
-  //   app.set("view engine", "ejs");
-  //   var userData = donorModel.find({});
-  //   res.render("check.ejs", {
-  //     userData: data,
-  //   });
+app.get("/testmongo", function (req, res) {
+  donorModel.find({}, function (err, data) {
+    var userData = donorModel.find({});
+    res.render("donor-table.ejs", { userData: data });
+  });
+  healthModel.find({}, function (err, data) {
+    var userData = healthModel.find({});
+    res.render("donor-table.ejs", { userData: data });
+  });
+  // eduModel.find({}, function (err, data) {
+  //   var userData = eduModel.find({});
+  //   res.render("donor-table.ejs", { userData: data });
   // });
-  //res.render("ngo-view.ejs");
-  res.sendFile("./views/donate-health.html", { root: __dirname });
+  // foodModel.find({}, function (err, data) {
+  //   var userData = foodModel.find({});
+  //   res.render("donor-table.ejs", { userData: data });
+  // });
+  //res.sendFile("./views/contact-admin.html", { root: __dirname });
+});
+app.get("/contact-admin", function (req, res) {
+  res.sendFile("./views/contact-admin.html", { root: __dirname });
+});
+app.get("/faq", function (req, res) {
+  res.sendFile("./views/faq.html", { root: __dirname });
+});
+app.get("/ngo-profile", function (rerq, res) {
+  res.render("ngo-profile.ejs");
 });
 app.get("/donor-profile", async function (req, res) {
   res.render("donor-profile.ejs");
@@ -113,7 +130,15 @@ app.post("/donate-food&water", function (req, res) {
   newfoodDoc.save();
   res.send("success");
 });
-
+app.get("/ngo-list", function (req, res) {
+  ngoModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = ngoModel.find({});
+    res.render("ngo-list.ejs", {
+      userData: data,
+    });
+  });
+});
 app.get("/donor-list", function (req, res) {
   donorModel.find({}, function (err, data) {
     app.set("view engine", "ejs");
@@ -142,20 +167,9 @@ app.post("/ngo-login", async function (req, res) {
       if (err) throw err;
       if (data) {
         console.log(req.body);
+        return res.render("ngo-view.ejs");
 
-        // ngoModel.find({}, function (err, data) {
-        //   console.log(err);
-        //   console.log(data);
-
-        //   app.set("view engine", "ejs");
-        //   var userData = ngoModel.find({});
-
-        //   res.render("ngo-table.ejs", {
-        //     userData: data,
-        //   });
-        // });
-
-        return res.status(200).json({ msg: "Login success" });
+        // return res.status(200).json({ msg: "Login success" });
       } else {
         return res.render("pages-error-404.ejs");
         // return res.status(401).json({ msg: "Invalid credencial" });
