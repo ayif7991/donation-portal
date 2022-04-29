@@ -77,16 +77,7 @@ app.get("/contact-adminD", function (req, res) {
 app.get("/faq", function (req, res) {
   res.sendFile("./views/faq.html", { root: __dirname });
 });
-app.get("/ngo-profile", function (err, data) {
-  donorModel.findOne({}, function (err, data) {
-    app.set("view engine", "ejs");
-    var userData = donorModel.findOne({email:email});
-    res.render("ngo-donorview.ejs", {
-      userData: data,
-    });
-  });
-  }
-});
+
 app.get("/ngo-donorview", function (rerq, res) {
   donorModel.find({}, function (err, data) {
     app.set("view engine", "ejs");
