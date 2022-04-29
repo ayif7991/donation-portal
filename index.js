@@ -9,7 +9,7 @@ const express = require("express"),
   eduModel = require("./src/models/edu"),
   foodModel = require("./src/models/food");
 
-const { render } = require("express/lib/response");
+const { render, location } = require("express/lib/response");
 const res = require("express/lib/response");
 const app = express();
 //var db = require("./db");
@@ -21,9 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 //To serve the Static pages
 app.use("/public", express.static("public"));
 
-//To serve the home  page
-app.get("/", function (req, res) {
-  res.sendFile("./view/index.html", { root: __dirname });
+app.get("/index", function (req, res) {
+  res.sendFile("./views/index.html", { root: __dirname });
 });
 
 //To serve the admin page
@@ -45,35 +44,59 @@ app.post("/admin", async function (req, res) {
   // console.log("oke fine");
   // return res.sendFile("./view/adminview.html", { root: __dirname });
 });
-
-app.get("/testmongo", function (req, res) {
-  donorModel.find({}, function (err, data) {
-    var userData = donorModel.find({});
-    res.render("donor-table.ejs", { userData: data });
+app.get("/ngo-list", function (req, res) {
+  ngoModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = ngoModel.find({});
+    res.render("ngo-list.ejs", {
+      userData: data,
+    });
   });
-  healthModel.find({}, function (err, data) {
-    var userData = healthModel.find({});
-    res.render("donor-table.ejs", { userData: data });
-  });
-  // eduModel.find({}, function (err, data) {
-  //   var userData = eduModel.find({});
-  //   res.render("donor-table.ejs", { userData: data });
-  // });
-  // foodModel.find({}, function (err, data) {
-  //   var userData = foodModel.find({});
-  //   res.render("donor-table.ejs", { userData: data });
-  // });
-  //res.sendFile("./views/contact-admin.html", { root: __dirname });
 });
-app.get("/contact-admin", function (req, res) {
-  res.sendFile("./views/contact-admin.html", { root: __dirname });
+app.get("/donor-list", function (req, res) {
+  donorModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = donorModel.find({});
+    res.render("donor-list.ejs", {
+      userData: data,
+    });
+  });
+});
+app.get("/testmongo", function (req, res) {
+  let name = "alfi";
+  res.render("test.ejs", {
+    username: name,
+  });
+});
+app.get("/contact-adminN", function (req, res) {
+  res.sendFile("./views/contact-adminN.html", { root: __dirname });
+});
+app.get("/contact-adminD", function (req, res) {
+  res.sendFile("./views/contact-adminD.html", { root: __dirname });
 });
 app.get("/faq", function (req, res) {
   res.sendFile("./views/faq.html", { root: __dirname });
 });
-app.get("/ngo-profile", function (rerq, res) {
-  res.render("ngo-profile.ejs");
+app.get("/ngo-profile", function (err, data) {
+  donorModel.findOne({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = donorModel.findOne({email:email});
+    res.render("ngo-donorview.ejs", {
+      userData: data,
+    });
+  });
+  }
 });
+app.get("/ngo-donorview", function (rerq, res) {
+  donorModel.find({}, function (err, data) {
+    app.set("view engine", "ejs");
+    var userData = donorModel.find({});
+    res.render("ngo-donorview.ejs", {
+      userData: data,
+    });
+  });
+});
+
 app.get("/donor-profile", async function (req, res) {
   res.render("donor-profile.ejs");
 });
@@ -130,27 +153,7 @@ app.post("/donate-food&water", function (req, res) {
   newfoodDoc.save();
   res.send("success");
 });
-app.get("/ngo-list", function (req, res) {
-  ngoModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
-    var userData = ngoModel.find({});
-    res.render("ngo-list.ejs", {
-      userData: data,
-    });
-  });
-});
-app.get("/donor-list", function (req, res) {
-  donorModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
-    var userData = donorModel.find({});
-    res.render("donor-list.ejs", {
-      userData: data,
-    });
-  });
-});
-app.get("/index", function (req, res) {
-  res.sendFile("./views/index.html", { root: __dirname });
-});
+
 //To serve ngo login page
 app.get("/ngo-login", function (req, res) {
   console.log("login page");
@@ -198,7 +201,7 @@ app.post("/ngo-register", async function (req, res) {
         email: req.body.email,
         username: req.body.username,
         contact: req.body.contact,
-        location: req.body.Location,
+        location: req.body.location,
         password: hashedpassword,
       });
 
@@ -209,8 +212,10 @@ app.post("/ngo-register", async function (req, res) {
         console.log("save errror");
         console.log("err", err);
       }
-
-      res.send("success");
+      // var alert = require("alert");
+      // alert("Hello");
+      // res.send("success");
+      res.sendFile("./views/ngo-login.html", { root: __dirname });
     } else {
       res.send("mismatch password");
     }
@@ -258,13 +263,14 @@ app.post("/donor-register", async function (req, res) {
     if (password === confPassword) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
-
       const newdonorDoc = new donorModel({
         name: req.body.donorname,
         email: req.body.email,
         username: req.body.username,
         contact: req.body.contact,
         location: req.body.location,
+        donation: req.body.donation,
+        dod: req.body.dod,
         password: hashedpassword,
       });
 
@@ -290,23 +296,4 @@ app.post("/donor-register", async function (req, res) {
   // res.send(req.body);
 });
 
-//to serve donation type-education
-app.get("/Donationtype/education", function (req, res) {
-  res.sendFile("./view/donationtype/education.html", { root: __dirname });
-});
-//to serve donation type-food and water
-app.get("/Donationtype/foodandwater", function (req, res) {
-  res.sendFile("./view/donationtype/foodandwater.html", { root: __dirname });
-});
-//to serve donation type-health and medicine
-app.get("/Donationtype/healthandmedicine", function (req, res) {
-  res.sendFile("./view/donationtype/healthandmedicine.html", {
-    root: __dirname,
-  });
-});
-//To serve donatesignup page
-app.get("/Donationtype", function (req, res) {
-  res.sendFile("./view/donation_type.html", { root: __dirname });
-});
-
-app.listen(port, () => console.log(`listen to port${port}`));
+app.listen(port, () => console.log(`listen to port ${port}`));

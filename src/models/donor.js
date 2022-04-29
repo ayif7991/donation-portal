@@ -22,6 +22,12 @@ const donorSchema = new mongoose.Schema({
   location: {
     type: String,
   },
+  donation: {
+    type: String,
+  },
+  dod: {
+    type: Date,
+  },
   password: {
     type: String,
     required: true,
