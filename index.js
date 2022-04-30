@@ -12,7 +12,8 @@ const express = require("express"),
   // eduModel = require("./src/models/edu"),
   //foodModel = require("./src/models/food"),
   donationModel = require("./src/models/donation"),
-  authUtils = require("./src/utils/auth");
+  authUtils = require("./src/utils/auth"),
+  staticController = require("./controller/staticController");
 
 const { render, location } = require("express/lib/response");
 const res = require("express/lib/response");
@@ -44,22 +45,12 @@ app.get("/testmongo", function (req, res) {
 });
 
 // <<<<< PUBLIC >>>>>
-app.get("/", function (req, res) {
-  res.sendFile("./views/index.html", { root: __dirname });
-});
+app.get("/", staticController.homePage);
+app.get("/index", staticController.homePage);
 
-app.get("/index", function (req, res) {
-  res.sendFile("./views/index.html", { root: __dirname });
-});
+app.get("/logout", staticController.logout);
 
-app.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect("/");
-});
-
-app.get("/faq", function (req, res) {
-  res.sendFile("./views/faq.html", { root: __dirname });
-});
+app.get("/faq", staticController.faq);
 
 //To serve the admin page
 app.get("/admin", function (req, res) {
