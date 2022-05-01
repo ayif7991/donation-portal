@@ -16,6 +16,7 @@ const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.set("view engine", "ejs");
 
 // <<<<< SESSION >>>>>
 const oneDay = 1000 * 60 * 60 * 24;
@@ -66,7 +67,6 @@ app.post("/admin", async function (req, res) {
     req.session.name = "Admin";
     console.log("admin session created");
     ngoModel.find({}, function (err, data) {
-      app.set("view engine", "ejs");
       var userData = ngoModel.find({});
       res.render("ngo-list.ejs", {
         userData: data,
@@ -256,7 +256,6 @@ app.use(acl.authorize);
 app.get("/admin/ngo-list", function (req, res) {
   if ((req.session.role = "admin")) {
     ngoModel.find({}, function (err, data) {
-      app.set("view engine", "ejs");
       var userData = ngoModel.find({});
       res.render("ngo-list.ejs", {
         userData: data,
@@ -269,7 +268,6 @@ app.get("/admin/ngo-list", function (req, res) {
 
 app.get("/admin/donor-list", function (req, res) {
   donorModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
     var userData = donorModel.find({});
     res.render("donor-list.ejs", {
       userData: data,
@@ -283,7 +281,6 @@ app.get("/ngo/profile", function (req, res) {
 });
 app.get("/ngo/donorview", function (req, res) {
   donorModel.find({}, function (err, data) {
-    app.set("view engine", "ejs");
     var userData = donorModel.find({});
     res.render("ngo-donorview.ejs", {
       userData: data,
