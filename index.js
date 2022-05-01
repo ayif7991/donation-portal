@@ -1,27 +1,17 @@
-//var popupS = require("popups");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"),
+  cookieParser = require("cookie-parser"),
+  sessions = require("express-session"),
+  express = require("express"),
+  acl = require("express-acl");
 
-const cookieParser = require("cookie-parser");
-const sessions = require("express-session");
-
-const express = require("express"),
-  mongoose = require("./src/db/mongoose"),
-  ngoModel = require("./src/models/ngo"),
-  acl = require('express-acl'),
+const mongoose = require("./src/db/mongoose"),
   donorModel = require("./src/models/donor"),
-  //healthModel = require("./src/models/health"),
-  // eduModel = require("./src/models/edu"),
-  //foodModel = require("./src/models/food"),
+  ngoModel = require("./src/models/ngo"),
   donationModel = require("./src/models/donation"),
   authUtils = require("./src/utils/auth"),
   staticController = require("./controller/staticController");
 
-const { render, location } = require("express/lib/response");
-const res = require("express/lib/response");
-const { findOne } = require("./src/models/ngo");
-const session = require("express-session");
 const app = express();
-//var db = require("./db");
 const port = 3000;
 
 app.use(express.json());
@@ -260,6 +250,7 @@ app.get("/ngo-register", function (req, res) {
   res.sendFile("./views/ngo-register.html", { root: __dirname });
 });
 
+// <<<<< ACL >>>>>
 app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
 app.get("/admin/ngo-list", function (req, res) {
@@ -320,10 +311,13 @@ app.get("/donor/donations", async function (req, res) {
   // });
 });
 
-
 app.put("/donor/donation/:id", async function (req, res) {
+  // const newId = new mongoose.Types.ObjectId(id);
+  // updateOne({ id: id }, { $set: { status: status } });
   console.log(req.body);
-  res.send({status: "success"});
+  // console.log(_id);
+
+  res.send({ status: "success" });
 });
 
 app.get("/donor/donate-health", async function (req, res) {
