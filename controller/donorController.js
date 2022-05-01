@@ -1,4 +1,5 @@
 const path = require('path'),
+    mongoose = require("mongoose"),
     donorModel = require("../src/models/donor"),
     donationModel = require("../src/models/donation");
 
@@ -21,10 +22,14 @@ donorController.donations = async function(req, res) {
 };
 
 donorController.donationUpdate = async function(req, res) {
-    // const newId = new mongoose.Types.ObjectId(id);
-    // updateOne({ id: id }, { $set: { status: status } });
-    console.log(req.body);
-    // console.log(_id);
+    const newId = new mongoose.Types.ObjectId(req.body.id);
+    await donationModel.updateOne({
+        id: newId
+    }, {
+        $set: {
+            status: req.body.status
+        }
+    });
 
     res.send({
         status: "success"

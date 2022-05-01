@@ -277,18 +277,19 @@
                     <td><%=data.dod %></td>
                     <td>
                       <%
-                        selectedOpen = selectedPending = selectedClose = '';
+                        selectedOpen = selectedPending = selectedClose = selectDisable = '';
                         if ('close' == data.status) {
                           selectedClose = 'selected';
+                          selectDisable = 'disabled';
                         } else if ('pending' == data.status) {
                           selectedPending = 'selected';
                         } else {
                           selectedOpen = 'selected';
                         }
                       %>
-                      <select id="<%=data._id%>" class="donation-status">
+                      <select id="<%=data._id%>" <%=selectDisable%> class="donation-status">
                         <option <%=selectedOpen%> value="open">Open</option>
-                        <option  <%=selectedPending%> value="pending collection">Pending collection</option>
+                        <option  <%=selectedPending%> value="pending">Pending Collection</option>
                         <option  <%=selectedClose%> value="close">Close</option>
                       </select>
                   </td>

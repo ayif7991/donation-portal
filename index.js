@@ -7,8 +7,6 @@ const bcrypt = require("bcrypt"),
 const mongoose = require("./src/db/mongoose"),
   donorModel = require("./src/models/donor"),
   ngoModel = require("./src/models/ngo"),
-  donationModel = require("./src/models/donation"),
-  authUtils = require("./src/utils/auth"),
   staticController = require("./controller/staticController"),
   adminController = require("./controller/adminController"),
   ngoController = require("./controller/ngoController"),
@@ -40,10 +38,6 @@ acl.config();
 app.use("/public", express.static("public"));
 
 app.get("/testmongo", function (req, res) {
-  // let userId = req.session.userId;
-  // let donorId = donationModel.find({ userId });
-  // console.log(donorId);
-  // res.render("donations.ejs");
 });
 
 // <<<<< PUBLIC >>>>>
