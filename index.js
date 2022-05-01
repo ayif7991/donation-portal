@@ -109,7 +109,7 @@ app.post("/donor-login", async function (req, res) {
           session.userEmail = donor.email;
           session.role = "donor";
           console.log(req.session.userId);
-          res.render("donations.ejs");
+          res.redirect("donor/donations");
           //return res.status(200).json({ msg: "Login success" });
         } else {
           return res.status(401).json({ msg: "Invalid credencial" });
@@ -144,7 +144,7 @@ app.post("/donor-register", async function (req, res) {
         email: req.body.email,
         contact: req.body.contact,
         location: req.body.location,
-        donation: req.body.donation,
+        //  donation: req.body.donation,
         dod: req.body.dod,
         password: hashedpassword,
       });
@@ -158,7 +158,7 @@ app.post("/donor-register", async function (req, res) {
         console.log("err", err);
       }
 
-      res.send("success");
+      res.redirect("/donor-login");
     } else {
       res.send("mismatch password");
     }
@@ -341,7 +341,9 @@ app.post("/donor/donate-health", function (req, res) {
     dod: req.body.dod,
   });
   newDoc.save();
-  res.send("success");
+  res.redirect("/donor/donations");
+
+  // res.send("success");
 });
 
 app.get("/donor/donate-food&water", async function (req, res) {
@@ -363,7 +365,9 @@ app.post("/donor/donate-education", function (req, res) {
     dod: req.body.dod,
   });
   newDoc.save();
-  res.send("success");
+  res.redirect("/donor/donations");
+
+  //res.send("success");
 });
 
 app.get("/donor/donate-education", async function (req, res) {
@@ -386,7 +390,9 @@ app.post("/donor/donate-food&water", function (req, res) {
     dod: req.body.dod,
   });
   newDoc.save();
-  res.send("success");
+  res.redirect("/donor/donations");
+
+  //res.send("success");
 });
 
 app.get("/donor/contact-adminD", function (req, res) {
