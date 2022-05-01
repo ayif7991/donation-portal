@@ -1,5 +1,6 @@
 const path = require('path'),
-    donorModel = require("../src/models/donor");
+    donorModel = require("../src/models/donor"),
+    donationModel = require("../src/models/donation");
 
 let donorController = {};
 
