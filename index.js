@@ -11,7 +11,8 @@ const mongoose = require("./src/db/mongoose"),
   authUtils = require("./src/utils/auth"),
   staticController = require("./controller/staticController"),
   adminController = require("./controller/adminController"),
-  ngoController = require("./controller/ngoController");
+  ngoController = require("./controller/ngoController"),
+  donorController = require("./controller/donorController");
 
 const app = express();
 const port = 3000;
@@ -257,106 +258,15 @@ app.get("/ngo/contact-adminN", ngoController.contactAdmin);
 
 // <<<<< DONOR >>>>>
 //To serve donate page
-app.get("/donor/profile", async function (req, res) {
-  res.render("donor-profile.ejs");
-});
-
-app.get("/donor/donations", async function (req, res) {
-  let userId = req.session.userId;
-  var donationData = await donationModel.find({ donorId: userId });
-  res.render("donations.ejs", {
-    donationData: donationData,
-  });
-  console.log(donationData);
-  // });
-});
-
-app.put("/donor/donation/:id", async function (req, res) {
-  // const newId = new mongoose.Types.ObjectId(id);
-  // updateOne({ id: id }, { $set: { status: status } });
-  console.log(req.body);
-  // console.log(_id);
-
-  res.send({ status: "success" });
-});
-
-app.get("/donor/donate-health", async function (req, res) {
-  console.log("donate");
-  res.render("donate-health.ejs");
-
-  // res.sendFile("./views/donate-health.html", { root: __dirname });
-});
-
-app.post("/donor/donate-health", function (req, res) {
-  const newDoc = new donationModel({
-    donorId: req.session.userId,
-    type: "health",
-    status: "open",
-    aim: req.body.aim,
-    select: req.body.select,
-    specific: req.body.specific,
-    quantity: req.body.quantity,
-    doe: req.body.doe,
-    desc: req.body.desc,
-    dod: req.body.dod,
-  });
-  newDoc.save();
-  res.redirect("/donor/donations");
-
-  // res.send("success");
-});
-
-app.get("/donor/donate-food&water", async function (req, res) {
-  console.log("donate");
-  res.sendFile("./views/donate-food&water.html", { root: __dirname });
-});
-
-app.post("/donor/donate-education", function (req, res) {
-  console.log(req.body);
-  const newDoc = new donationModel({
-    donorId: req.session.userId,
-    status: "open",
-    type: "education",
-    aim: req.body.aim,
-    select: req.body.select,
-    specific: req.body.specific,
-    quantity: req.body.quantity,
-    desc: req.body.desc,
-    dod: req.body.dod,
-  });
-  newDoc.save();
-  res.redirect("/donor/donations");
-
-  //res.send("success");
-});
-
-app.get("/donor/donate-education", async function (req, res) {
-  console.log("donate");
-  res.sendFile("./views/donate-education.html", { root: __dirname });
-});
-
-app.post("/donor/donate-food&water", function (req, res) {
-  console.log(req.body);
-  const newDoc = new donationModel({
-    donorId: req.session.userId,
-    status: "open",
-    type: "food",
-    aim: req.body.aim,
-    select: req.body.select,
-    specific: req.body.specific,
-    quantity: req.body.quantity,
-    doe: req.body.doe,
-    desc: req.body.desc,
-    dod: req.body.dod,
-  });
-  newDoc.save();
-  res.redirect("/donor/donations");
-
-  //res.send("success");
-});
-
-app.get("/donor/contact-adminD", function (req, res) {
-  res.sendFile("./views/contact-adminD.html", { root: __dirname });
-});
+app.get("/donor/profile", donorController.profile);
+app.get("/donor/donations", donorController.donations);
+app.put("/donor/donation/:id", donorController.donationUpdate);
+app.get("/donor/donate-health", donorController.donateHealthGet);
+app.post("/donor/donate-health", donorController.donateHealthPost);
+app.get("/donor/donate-food&water", donorController.donateFoodGet);
+app.post("/donor/donate-food&water", donorController.donateFoodPost);
+app.get("/donor/donate-education", donorController.donateEducationGet);
+app.post("/donor/donate-education", donorController.donateEducationPost);
+app.get("/donor/contact-adminD", donorController.contactAdmin);
 
 app.listen(port, () => console.log(`listen to port ${port}`));
