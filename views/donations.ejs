@@ -268,19 +268,26 @@
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
-                <% if(donationData.length!=0){ var i=1; donationData.forEach(function(data){ %>
+                <% if(donationData.length!=0){ var i=1; donationData.forEach(function(data) { %>
                   <tr>
                     <td><%=i; %></td>
                     <td><%=data.type %></td>
                     <td><%=data.dod %></td>
-                    <td><%=data.status %>
-                      <% if ('open' == donationData.status) {
-                        statusOpen = 'checked';
-                      } else if
-                      <select>
-                        <option <%=statusOpen%> value="open">open</option>
-                        <option value="pending collection">pending collection</option>
-                        <option value="close">close</option>
+                    <td>
+                      <%
+                        selectedOpen = selectedPending = selectedClose = '';
+                        if ('close' == data.status) {
+                          selectedClose = 'selected';
+                        } else if ('pending' == data.status) {
+                          selectedPending = 'selected';
+                        } else {
+                          selectedOpen = 'selected';
+                        }
+                      %>
+                      <select id="<%=data._id%>" class="donation-status">
+                        <option <%=selectedOpen%> value="open">Open</option>
+                        <option  <%=selectedPending%> value="pending collection">Pending collection</option>
+                        <option  <%=selectedClose%> value="close">Close</option>
                       </select>
                   </td>
                     
@@ -329,6 +336,33 @@
 
   <!-- Template Main JS File -->
   <script src="/public/niceadmin/assets/js/main.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      $('.donation-status').on('change', function() {
+
+        that = $(this);
+        if (confirm("Are you sure, You want change the donation status?") == true) {
+
+          $(this).attr('disabled', 'disabled');
+          const donationId = $(this).attr('id');
+          $.ajax({
+            url: '/donor/donation/' + donationId,
+            method: 'PUT',
+            data: {id: donationId, status: $(this).val()}
+          })
+          .done(function(data) {
+            window.location = window.location;
+          })
+          .fail(function(jqXHR, textStatus ) {
+            window.location = window.location;
+          });
+        } else {
+          window.location = window.location;
+        }
+      });
+    });
+  </script>
 
 </body>
 

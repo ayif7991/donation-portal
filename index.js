@@ -314,6 +314,12 @@ app.get("/donor/donations", async function (req, res) {
   // });
 });
 
+
+app.put("/donor/donation/:id", async function (req, res) {
+  console.log(req.body);
+  res.send({status: "success"});
+});
+
 app.get("/donor/donate-health", async function (req, res) {
   console.log("donate");
   res.render("donate-health.ejs");
