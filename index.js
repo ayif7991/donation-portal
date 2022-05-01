@@ -189,7 +189,7 @@ app.post("/ngo-login", async function (req, res) {
           session.role = "ngo";
           console.log(req.session);
           // res.render("ngo-view.ejs");
-          res.render("ngo-profile.ejs");
+          res.render("ngo-view.ejs");
 
           console.log(req.session);
           //return res.render("ngo-view.ejs");}
