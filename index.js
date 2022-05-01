@@ -253,27 +253,9 @@ app.get("/ngo-register", function (req, res) {
 // <<<<< ACL >>>>>
 app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
-app.get("/admin/ngo-list", function (req, res) {
-  if ((req.session.role = "admin")) {
-    ngoModel.find({}, function (err, data) {
-      var userData = ngoModel.find({});
-      res.render("ngo-list.ejs", {
-        userData: data,
-      });
-    });
-  } else {
-    authUtils.redirect(res.session);
-  }
-});
+app.get("/admin/ngo-list", adminController.ngoList);
 
-app.get("/admin/donor-list", function (req, res) {
-  donorModel.find({}, function (err, data) {
-    var userData = donorModel.find({});
-    res.render("donor-list.ejs", {
-      userData: data,
-    });
-  });
-});
+app.get("/admin/donor-list", adminController.donorList);
 
 // <<<<<< NGO >>>>>>
 app.get("/ngo/profile", function (req, res) {
