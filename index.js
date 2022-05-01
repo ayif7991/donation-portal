@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt"),
   express = require("express"),
   acl = require("express-acl");
 
-const mongoose = require("./src/db/mongoose"),
+const mongooseConn = require("./src/db/mongoose"),
   donorModel = require("./src/models/donor"),
   ngoModel = require("./src/models/ngo"),
   staticController = require("./controller/staticController"),
@@ -37,8 +37,7 @@ acl.config();
 //To serve the Static pages
 app.use("/public", express.static("public"));
 
-app.get("/testmongo", function (req, res) {
-});
+app.get("/testmongo", function (req, res) {});
 
 // <<<<< PUBLIC >>>>>
 app.get("/", staticController.homePage);
