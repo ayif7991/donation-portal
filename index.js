@@ -7,6 +7,7 @@ const sessions = require("express-session");
 const express = require("express"),
   mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo"),
+  acl = require('express-acl'),
   donorModel = require("./src/models/donor"),
   //healthModel = require("./src/models/health"),
   // eduModel = require("./src/models/edu"),
@@ -26,6 +27,7 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// <<<<< SESSION >>>>>
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   sessions({
@@ -36,6 +38,9 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+// <<<<< ACL >>>>>
+acl.config();
 
 //To serve the Static pages
 app.use("/public", express.static("public"));
@@ -255,6 +260,7 @@ app.get("/ngo-register", function (req, res) {
   res.sendFile("./views/ngo-register.html", { root: __dirname });
 });
 
+app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
 app.get("/admin/ngo-list", function (req, res) {
   if ((req.session.role = "admin")) {
