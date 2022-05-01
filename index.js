@@ -41,7 +41,10 @@ app.use(cookieParser());
 app.use("/public", express.static("public"));
 
 app.get("/testmongo", function (req, res) {
-  res.render("donations.ejs");
+  // let userId = req.session.userId;
+  // let donorId = donationModel.find({ userId });
+  // console.log(donorId);
+  // res.render("donations.ejs");
 });
 
 // <<<<< PUBLIC >>>>>
@@ -106,7 +109,7 @@ app.post("/donor-login", async function (req, res) {
           session.userEmail = donor.email;
           session.role = "donor";
           console.log(req.session.userId);
-          res.render("donor-profile.ejs");
+          res.render("donations.ejs");
           //return res.status(200).json({ msg: "Login success" });
         } else {
           return res.status(401).json({ msg: "Invalid credencial" });
@@ -190,7 +193,9 @@ app.post("/ngo-login", async function (req, res) {
           session.userEmail = ngo.email;
           session.role = "ngo";
           console.log(req.session);
-          res.render("ngo-view.ejs");
+          // res.render("ngo-view.ejs");
+          res.render("ngo-profile.ejs");
+
           console.log(req.session);
           //return res.render("ngo-view.ejs");}
         } else {
@@ -300,7 +305,13 @@ app.get("/donor/profile", async function (req, res) {
 });
 
 app.get("/donor/donations", async function (req, res) {
-  res.render("donations.ejs");
+  let userId = req.session.userId;
+  var donationData = await donationModel.find({ donorId: userId });
+  res.render("donations.ejs", {
+    donationData: donationData,
+  });
+  console.log(donationData);
+  // });
 });
 
 app.get("/donor/donate-health", async function (req, res) {
