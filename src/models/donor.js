@@ -18,6 +18,7 @@ const donorSchema = new mongoose.Schema({
   },
   location: {
     type: String,
+    required: true,
   },
   // donation: {
   //   type: String,

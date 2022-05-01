@@ -46,8 +46,9 @@ donorController.donateHealthGet = async function (req, res) {
 donorController.donateHealthPost = function (req, res) {
   const newDoc = new donationModel({
     donorId: req.session.userId,
-    type: "health",
+    type: "Nutrition and Healthcare",
     status: "open",
+    active: true,
     aim: req.body.aim,
     select: req.body.select,
     specific: req.body.specific,
@@ -69,7 +70,8 @@ donorController.donateFoodPost = function (req, res) {
   const newDoc = new donationModel({
     donorId: req.session.userId,
     status: "open",
-    type: "food",
+    type: "Food and Beverages",
+    active: true,
     aim: req.body.aim,
     select: req.body.select,
     specific: req.body.specific,
@@ -91,7 +93,8 @@ donorController.donateEducationPost = function (req, res) {
   const newDoc = new donationModel({
     donorId: req.session.userId,
     status: "open",
-    type: "education",
+    type: "Books,Stationary and more",
+    active: true,
     aim: req.body.aim,
     select: req.body.select,
     specific: req.body.specific,

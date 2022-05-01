@@ -132,7 +132,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="/logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -252,7 +252,7 @@
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section">
+    <section class="section"> 
       <div class="row">
         <div class="col-lg-12">
 
@@ -356,7 +356,10 @@
           })
           .done(function(data) {
             alert("Donation status updated!");
-            window.location = window.location;
+            //window.location = window.location;
+            if ('close' != $(this).val()) {
+              that.removeAttr('disabled');
+            }
           })
           .fail(function(jqXHR, textStatus ) {
             alert("Donation status update failed!");

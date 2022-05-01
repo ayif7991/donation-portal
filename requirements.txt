@@ -3,5 +3,14 @@ TO DO:
 1/5/22
 1.make file field mandatory in donation
 2.make dropdown add in db
-3.status update
+3.status update(done)
 4.edit and delete work for admin
+5.while adding donations make it active by default(done)
+
+====================================
+DONOR=====>>>>
+1.donor-register 2.donor-login(reg->login) 3.donor-donations(login->donations//donor/donations)
+{status update in database}
+
+NGO=====>>>>
+1.ngo-register 2.ngo-login(reg->login) 

@@ -37,7 +37,9 @@ acl.config();
 //To serve the Static pages
 app.use("/public", express.static("public"));
 
-app.get("/testmongo", function (req, res) {});
+app.get("/testmongo", function (req, res) {
+  res.render("ngo-donorview.ejs");
+});
 
 // <<<<< PUBLIC >>>>>
 app.get("/", staticController.homePage);
@@ -182,8 +184,8 @@ app.post("/ngo-login", async function (req, res) {
           session.role = "ngo";
           console.log(req.session);
           // res.render("ngo-view.ejs");
-          res.render("ngo-view.ejs");
-
+          // res.render("ngo-donorview.ejs");
+          res.redirect("ngo/donorview");
           console.log(req.session);
           //return res.render("ngo-view.ejs");}
         } else {
