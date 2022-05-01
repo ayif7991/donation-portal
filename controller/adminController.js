@@ -1,5 +1,4 @@
-const path = require('path'),
-    ngoModel = require("../src/models/ngo"),
+const ngoModel = require("../src/models/ngo"),
     donorModel = require("../src/models/donor");
 
 let adminController = {};
@@ -13,13 +12,13 @@ adminController.ngoList = function(req, res) {
     });
 };
 
-adminController.donorList = function (req, res) {
-  donorModel.find({}, function (err, data) {
-    var userData = donorModel.find({});
-    res.render("donor-list.ejs", {
-      userData: data,
+adminController.donorList = function(req, res) {
+    donorModel.find({}, function(err, data) {
+        var userData = donorModel.find({});
+        res.render("donor-list.ejs", {
+            userData: data,
+        });
     });
-  });
-}
+};
 
 module.exports = adminController;

@@ -9,7 +9,9 @@ const mongoose = require("./src/db/mongoose"),
   ngoModel = require("./src/models/ngo"),
   donationModel = require("./src/models/donation"),
   authUtils = require("./src/utils/auth"),
-  staticController = require("./controller/staticController");
+  staticController = require("./controller/staticController"),
+  adminController = require("./controller/adminController"),
+  ngoController = require("./controller/ngoController");
 
 const app = express();
 const port = 3000;
@@ -254,25 +256,12 @@ app.get("/ngo-register", function (req, res) {
 app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
 app.get("/admin/ngo-list", adminController.ngoList);
-
 app.get("/admin/donor-list", adminController.donorList);
 
 // <<<<<< NGO >>>>>>
-app.get("/ngo/profile", function (req, res) {
-  res.render("ngo-profile.ejs");
-});
-app.get("/ngo/donorview", function (req, res) {
-  donorModel.find({}, function (err, data) {
-    var userData = donorModel.find({});
-    res.render("ngo-donorview.ejs", {
-      userData: data,
-    });
-  });
-});
-
-app.get("/ngo/contact-adminN", function (req, res) {
-  res.sendFile("./views/contact-adminN.html", { root: __dirname });
-});
+app.get("/ngo/profile", ngoController.profile);
+app.get("/ngo/donorview", ngoController.donorView);
+app.get("/ngo/contact-adminN", ngoController.contactAdmin);
 
 // <<<<< DONOR >>>>>
 //To serve donate page
