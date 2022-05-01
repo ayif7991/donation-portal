@@ -196,18 +196,10 @@
             <span>Profile</span>
           </a>
         </li>
-        <!-- End Dashboard Nav -->
-
-       
-        <!-- End Components Nav -->
-
-        
-        <!-- End Forms Nav -->
 
         <li class="nav-item">
           <a
-            class="nav-link"
-                       href="#"
+            class="nav-link" href="/ngo/donorview"
           >
             <i class="bi bi-layout-text-window-reverse"></i><span> Donor Table</span
             >
@@ -280,26 +272,23 @@
                       <th scope="col">Email Address</th>
                       <th scope="col">Location</th>
                       <th scope="col">Contact</th>
-                      <th scope="col">Donation</th>
-                      <th scope="col">Date of Donation</th>
                     </tr>
                   </thead>
-                  <% if(userData.length!=0){ var i=1;
-                  userData.forEach(function(data){ %>
-                  <tr>
-                    <td><%=i; %></td>
-                    <td><%=data.name %></td>
-                    <td><%=data.email %></td>
-                    <td><%=data.location %></td>
-                    <td><%=data.contact %></td>
-                    <td><%=data.donation %></td>
-                    <td><%=data.dod %></td>
-                  </tr>
-                  <% i++; }) %> <% } else{ %>
-                  <tr>
-                    <td colspan="7">No Data Found</td>
-                  </tr>
-                  <% } %>
+                  <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
+                    <tr>
+                      <td><%=i; %></td>
+                      <td><%=data.name %></td>
+                      <td><%=data.email %></td>
+                      <td><%=data.location %></td>
+                      <td><%=data.contact %></td>
+                      <td><a href="/edit/<%=data.id%>">Edit</a></td>
+                      <td><a href="/delete/<%=data.id%>">Delete</a></td>
+                    </tr>
+                    <% i++; }) %> <% } else{ %>
+                    <tr>
+                      <td colspan="7">No Data Found</td>
+                    </tr>
+                    <% } %>
                 </table>
                 <!-- End Table with stripped rows -->
               </div>

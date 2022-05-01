@@ -163,9 +163,6 @@ app.post("/donor-register", async function (req, res) {
     console.error("dono-signup failed", err);
     res.status(400).send(err);
   }
-
-  // console.log(password);
-  // res.send(req.body);
 });
 
 //To serve ngo login page
@@ -231,10 +228,8 @@ app.post("/ngo-register", async function (req, res) {
         console.log("save errror");
         console.log("err", err);
       }
-      // var alert = require("alert");
-      // alert("Hello");
-      // res.send("success");
-      res.sendFile("./views/ngo-login.html", { root: __dirname });
+
+      res.redirect("/ngo-login");
     } else {
       res.send("mismatch password");
     }
@@ -242,9 +237,6 @@ app.post("/ngo-register", async function (req, res) {
     console.error("ngo-signup failed", err);
     res.status(400).send(err);
   }
-
-  // console.log(password);
-  res.send(req.body);
 });
 
 //To serve ngo signup page

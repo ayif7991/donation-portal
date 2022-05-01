@@ -149,10 +149,11 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
+      
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/donor/profile">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
+        <a class="nav-link " href="/donor/donations">
+          <i class="bi bi-card-list"></i>
+          <span>My Donations</span>
         </a>
       </li>
       <!-- End Dashboard Nav -->
@@ -175,27 +176,28 @@
           data-bs-parent="#sidebar-nav"
         >
           <li>
-            <a href="/donor/donate-food&water">
+            <a href="donate-food&water">
               <i class="bi bi-circle"></i><span>Food and Bevarages</span>
             </a>
           </li>
           <li>
-            <a href="/donor/donate-health">
+            <a href="donate-Health">
               <i class="bi bi-circle"></i><span>Nutrtion and Healthcare</span>
             </a>
           </li>
           <li>
-            <a href="/donor/donate-Education">
+            <a href="donate-Education">
               <i class="bi bi-circle"></i
               ><span>Books,Stationary and more..</span>
             </a>
           </li>
          
         </ul>
-                <li class="nav-item">
-          <a class="nav-link " class="active" href="/donor/donations">
-            <i class="bi bi-card-list"></i>
-            <span>My Donations</span>
+        
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/donor/profile">
+            <i class="bi bi-person"></i>
+            <span>Profile</span>
           </a>
         </li>
       </li>
@@ -212,7 +214,7 @@
       <!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="faq">
+        <a class="nav-link collapsed" href="faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
@@ -352,9 +354,11 @@
             data: {id: donationId, status: $(this).val()}
           })
           .done(function(data) {
+            alert("Donation status updated!");
             window.location = window.location;
           })
           .fail(function(jqXHR, textStatus ) {
+            alert("Donation status update failed!");
             window.location = window.location;
           });
         } else {

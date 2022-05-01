@@ -19,9 +19,9 @@ const donorSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-  donation: {
-    type: String,
-  },
+  // donation: {
+  //   type: String,
+  // },
   dod: {
     type: Date,
   },
