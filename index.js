@@ -41,12 +41,12 @@ app.use(cookieParser());
 app.use("/public", express.static("public"));
 
 app.get("/testmongo", function (req, res) {
-  res.render("ngo-profile.ejs");
+  res.render("donations.ejs");
 });
 
 // <<<<< PUBLIC >>>>>
 app.get("/", staticController.homePage);
-app.get("/index", staticController.homePage);
+//app.get("/index", staticController.homePage);
 
 app.get("/logout", staticController.logout);
 
@@ -93,36 +93,29 @@ app.post("/donor-login", async function (req, res) {
     const password = req.body.password;
     console.log(`${email}${password}`);
 
-    const salt = await bcrypt.genSalt(10);
-    hashedpassword = await bcrypt.hash(password, salt);
-    console.log(hashedpassword);
+    const donor = await donorModel.findOne({ email: email });
 
-    const donor = await donorModel.findOne({
-      email: email,
-      password: hashedpassword,
-    });
-
+    console.log("donor");
     if (donor) {
-      let session = req.session;
-      session.userId = donor._id;
-      session.userName = donor.name;
-      session.userEmail = donor.email;
-      session.role = "donor";
-      res.render("donor-view.ejs");
+      bcrypt.compare(password, donor.password, (err, data) => {
+        if (err) throw err;
+        if (data) {
+          let session = req.session;
+          session.userId = donor._id;
+          session.userName = donor.name;
+          session.userEmail = donor.email;
+          session.role = "donor";
+          console.log(req.session.userId);
+          res.render("donor-profile.ejs");
+          //return res.status(200).json({ msg: "Login success" });
+        } else {
+          return res.status(401).json({ msg: "Invalid credencial" });
+          // return res.render("pages-error-404.ejs");
+        }
+      });
     } else {
       return res.status(401).json({ msg: "Invalid credencial" });
     }
-    // console.log("donor");
-    // bcrypt.compare(password, donor.password, (err, data) => {
-    //   if (err) throw err;
-    //   if (data) {
-    //     res.render("donor-view.ejs");
-    //     //return res.status(200).json({ msg: "Login success" });
-    //   } else {
-    //     return res.status(401).json({ msg: "Invalid credencial" });
-    //     // return res.render("pages-error-404.ejs");
-    //   }
-    // });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -146,7 +139,6 @@ app.post("/donor-register", async function (req, res) {
       const newdonorDoc = new donorModel({
         name: req.body.donorname,
         email: req.body.email,
-        username: req.body.username,
         contact: req.body.contact,
         location: req.body.location,
         donation: req.body.donation,
@@ -186,21 +178,29 @@ app.post("/ngo-login", async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const presentngo = await ngoModel.findOne({ email: email });
-    console.log(presentngo);
-    bcrypt.compare(password, presentngo.password, (err, data) => {
-      if (err) throw err;
-      if (data) {
-        console.log(req.body);
-        return res.render("ngo-view.ejs");
-
-        // return res.status(200).json({ msg: "Login success" });
-      } else {
-        return res.render("pages-error-404.ejs");
-        // return res.status(401).json({ msg: "Invalid credencial" });
-      }
-    });
-    //console.log(`${name}${password}`);
+    const ngo = await ngoModel.findOne({ email: email });
+    console.log(ngo);
+    if (ngo) {
+      bcrypt.compare(password, ngo.password, (err, data) => {
+        if (err) throw err;
+        if (data) {
+          let session = req.session;
+          session.userId = ngo._id;
+          session.userName = ngo.name;
+          session.userEmail = ngo.email;
+          session.role = "ngo";
+          console.log(req.session);
+          res.render("ngo-view.ejs");
+          console.log(req.session);
+          //return res.render("ngo-view.ejs");}
+        } else {
+          return res.status(401).json({ msg: "Invalid credencial" });
+          // return res.render("pages-error-404.ejs");
+        }
+      });
+    } else {
+      return res.status(401).json({ msg: "Invalid credencial" });
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -217,7 +217,6 @@ app.post("/ngo-register", async function (req, res) {
       const newNgoDoc = new ngoModel({
         name: req.body.ngoName,
         email: req.body.email,
-        username: req.body.username,
         contact: req.body.contact,
         location: req.body.location,
         password: hashedpassword,
@@ -301,7 +300,7 @@ app.get("/donor/profile", async function (req, res) {
 });
 
 app.get("/donor/donations", async function (req, res) {
-  res.render("donor-donations.ejs");
+  res.render("donations.ejs");
 });
 
 app.get("/donor/donate-health", async function (req, res) {
@@ -312,11 +311,10 @@ app.get("/donor/donate-health", async function (req, res) {
 });
 
 app.post("/donor/donate-health", function (req, res) {
-  console.log(req.body);
-  let donorid = "";
   const newDoc = new donationModel({
-    donorid: req.session.userId,
+    donorId: req.session.userId,
     type: "health",
+    status: "open",
     aim: req.body.aim,
     select: req.body.select,
     specific: req.body.specific,
@@ -337,6 +335,8 @@ app.get("/donor/donate-food&water", async function (req, res) {
 app.post("/donor/donate-education", function (req, res) {
   console.log(req.body);
   const newDoc = new donationModel({
+    donorId: req.session.userId,
+    status: "open",
     type: "education",
     aim: req.body.aim,
     select: req.body.select,
@@ -357,6 +357,8 @@ app.get("/donor/donate-education", async function (req, res) {
 app.post("/donor/donate-food&water", function (req, res) {
   console.log(req.body);
   const newDoc = new donationModel({
+    donorId: req.session.userId,
+    status: "open",
     type: "food",
     aim: req.body.aim,
     select: req.body.select,
@@ -368,9 +370,6 @@ app.post("/donor/donate-food&water", function (req, res) {
   });
   newDoc.save();
   res.send("success");
-});
-app.get("donor/my-donations", function (req, res) {
-  res.render("my-donations.ejs");
 });
 
 app.get("/donor/contact-adminD", function (req, res) {

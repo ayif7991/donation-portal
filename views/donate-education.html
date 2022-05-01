@@ -67,7 +67,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="/" class="logo d-flex align-items-center">
           <img src="/public/niceadmin/assets/img/logo.png" alt="" />
           <span class="d-none d-lg-block">Donation Portal</span>
         </a>
@@ -129,7 +129,7 @@
               <li>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="donor-profile"
+                  href="/donor/profile"
                 >
                   <i class="bi bi-person"></i>
                   <span>My Profile</span>
@@ -142,7 +142,7 @@
               <li>
                 <a
                   class="dropdown-item d-flex align-items-center"
-                  href="donor-profile"
+                  href="/donor/profile"
                 >
                   <i class="bi bi-gear"></i>
                   <span>Account Settings</span>
@@ -153,10 +153,7 @@
               </li>
 
               <li>
-                <a
-                  class="dropdown-item d-flex align-items-center"
-                  href="pages-faq.html"
-                >
+                <a class="dropdown-item d-flex align-items-center" href="faq">
                   <i class="bi bi-question-circle"></i>
                   <span>Need Help?</span>
                 </a>
@@ -185,7 +182,7 @@
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link collapsed" href="donor-profile">
+          <a class="nav-link collapsed" href="/donor/profile">
             <i class="bi bi-person"></i>
             <span>Profile</span>
           </a>
@@ -196,7 +193,7 @@
 
         <li class="nav-item">
           <a
-            class="nav-link collapsed"
+            class="nav-link"
             data-bs-target="#forms-nav"
             data-bs-toggle="collapse"
             href="#"
@@ -242,7 +239,7 @@
         <!-- End Contact Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="my-donations">
+          <a class="nav-link collapsed" href="/donor/donations">
             <i class="bi bi-card-list"></i>
             <span>My Donations</span>
           </a>
@@ -279,7 +276,7 @@
         <h1>Education Related Donations here..</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item">Donation</li>
             <li class="breadcrumb-item active">Food and Water</li>
           </ol>
@@ -301,7 +298,12 @@
                       >What are you aiming to donate</label
                     >
                     <div class="col-sm-10">
-                      <input name="aim" type="text" class="form-control" />
+                      <input
+                        required
+                        name="aim"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
 
@@ -335,7 +337,12 @@
                       >Specific details</label
                     >
                     <div class="col-sm-10">
-                      <input type="text" name="specific" class="form-control" />
+                      <input
+                        required
+                        type="text"
+                        name="specific"
+                        class="form-control"
+                      />
                     </div>
                   </div>
 
@@ -344,7 +351,12 @@
                       >Quantity</label
                     >
                     <div class="col-sm-10">
-                      <input name="quantity" type="text" class="form-control" />
+                      <input
+                        required
+                        name="quantity"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
 
@@ -366,7 +378,12 @@
                       >Date of Donation</label
                     >
                     <div class="col-sm-10">
-                      <input name="dod" type="date" class="form-control" />
+                      <input
+                        required
+                        name="dod"
+                        type="date"
+                        class="form-control"
+                      />
                     </div>
                   </div>
 
@@ -374,7 +391,7 @@
                     <label class="col-sm-2 col-form-label">Donate</label>
                     <div class="col-sm-10">
                       <button type="submit" class="btn btn-primary">
-                        Submit Form
+                        Donate
                       </button>
                     </div>
                   </div>

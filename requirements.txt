@@ -1,55 +1,7 @@
-STATIC PAGES                 ROUTES
-************                 ******
-1.index page{                 /
-  home                        /#home
-  about                       /#about
-  ngo                         /ngo-login    /ngo-signup
-  donor                       /donate       /donate-signup
-  admin                       /admin
-}
-2.Admin login page
-3.ngo login page
-4.ngo signup page
-5.donate page
-6.donate signup page
-7.donatiotyppe
- a-f&w
- b-h&m
- c-edu
-8.donationtype
-DB CREATION
-***********
-1.create a connection
 
- ngo and donor db table
-**********************
-name   -->string 
-contact-->number,unique
-email  -->string ,unique:true
-location -->string 	
-password & confirm password-->string
-
-type of donation db table
-*************************
-
-aim  --> string
-name -->string
-quantity -->number
-doe -->number
-desc -->string
-
-db created
-**********
-ngo signup with login
-donar signup with logn
-_________________________
-
-ngo signup --> ngo login -->
-{
-  name =>hashed
-  password =>QWEqwe123
-}
 TO DO:
-session(acl)
- login validation 
- themeintegration
+1/5/22
+1.make file field mandatory in donation
+2.make dropdown add in db
+3.status update
+4.edit and delete work for admin
