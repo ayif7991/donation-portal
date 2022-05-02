@@ -21,6 +21,7 @@ adminController.donorList = function (req, res) {
     });
   });
 };
+
 adminController.donationList = async function (req, res) {
   var donationData = await donationModel.find({});
   res.render("donations-list.ejs", {
