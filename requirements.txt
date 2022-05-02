@@ -7,10 +7,13 @@ TO DO:
 4.edit and delete work for admin
 5.while adding donations make it active by default(done)
 
-====================================
-DONOR=====>>>>
-1.donor-register 2.donor-login(reg->login) 3.donor-donations(login->donations//donor/donations)
-{status update in database}
+===============================
+ADMIN=====>>>>{ngo-list,donor-list,donations-list}
 
-NGO=====>>>>
-1.ngo-register 2.ngo-login(reg->login) 
+
+DONOR=====>>>>{reg,login,contD,donations,donate(3),profile,faq}
+1.donor-register 2.donor-login(reg->login) 3.donor-donations(login->donations//donor/donations)
+{status update in database not done}
+
+NGO=====>>>>{reg,login,contN,donORVIEW,profile,faq}
+1.ngo-register 2.ngo-login(reg->login) 3.login->donortable

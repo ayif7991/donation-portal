@@ -245,7 +245,7 @@ app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
 app.get("/admin/ngo-list", adminController.ngoList);
 app.get("/admin/donor-list", adminController.donorList);
-
+app.get("/admin/donation-list", adminController.donationList);
 // <<<<<< NGO >>>>>>
 app.get("/ngo/profile", ngoController.profile);
 app.get("/ngo/donorview", ngoController.donorView);

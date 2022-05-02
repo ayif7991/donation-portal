@@ -14,8 +14,6 @@ ngoController.donorView = async function (req, res) {
   let userId = req.session.userId;
   console.log(userId);
   var donationData = await donationModel.find({ status: "open" });
-  //var donationData = await donationModel.find({});
-
   console.log(donationData);
 
   res.render("ngo-donorview.ejs", {
