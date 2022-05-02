@@ -25,7 +25,7 @@ donorController.donationUpdate = async function (req, res) {
   const newId = new mongoose.Types.ObjectId(req.body.id);
   await donationModel.updateOne(
     {
-      id: newId,
+      _id: newId,
     },
     {
       $set: {

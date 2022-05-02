@@ -13,7 +13,7 @@ ngoController.profile = function (req, res) {
 ngoController.donorView = async function (req, res) {
   let userId = req.session.userId;
   console.log(userId);
-  var donationData = await donationModel.find({ status: "open" });
+  var donationData = await donationModel.find({ status: "open", active: true });
   // var donationData = await donationModel.find({
   //   donorId: userId,
   // });

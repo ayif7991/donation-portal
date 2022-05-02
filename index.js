@@ -52,7 +52,7 @@ app.post("/donor-login", authController.donorLogin);
 
 //To serve donatesignup page
 app.get("/donor-register", staticController.donorRegister);
-app.post("/donor-register", staticController.donorRegister);
+app.post("/donor-register", authController.donorRegister);
 
 //To serve ngo login page
 app.get("/ngo-login", staticController.ngoLogin);

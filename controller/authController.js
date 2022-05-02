@@ -1,4 +1,7 @@
-const path = require('path');
+const path = require("path"),
+  bcrypt = require("bcrypt"),
+  ngoModel = require("../src/models/ngo"),
+  donorModel = require("../src/models/donor");
 
 let authController = {};
 
@@ -7,7 +10,7 @@ authController.logout = (req, res) => {
   res.redirect("/");
 };
 
-authController.adminLogin = async function(req, res) {
+authController.adminLogin = async function (req, res) {
   let name = req.body.name;
   let password = req.body.password;
   console.log(req.body);
@@ -17,7 +20,7 @@ authController.adminLogin = async function(req, res) {
     req.session.role = "admin";
     req.session.name = "Admin";
     console.log("admin session created");
-    ngoModel.find({}, function(err, data) {
+    ngoModel.find({}, function (err, data) {
       var userData = ngoModel.find({});
       res.render("ngo-list.ejs", {
         userData: data,
@@ -38,7 +41,7 @@ authController.donorLogin = async function (req, res) {
     const password = req.body.password;
     console.log(`${email}${password}`);
 
-    const donor = await donorModel.findOne({ email: email });
+    const donor = await donorModel.findOne({ email: email, active: true });
 
     console.log("donor");
     if (donor) {
@@ -46,6 +49,7 @@ authController.donorLogin = async function (req, res) {
         if (err) throw err;
         if (data) {
           let session = req.session;
+          9;
           session.userId = donor._id;
           session.userName = donor.name;
           session.userEmail = donor.email;
@@ -70,8 +74,9 @@ authController.ngoLogin = async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const ngo = await ngoModel.findOne({ email: email });
+    const ngo = await ngoModel.findOne({ email: email, active: true });
     console.log(ngo);
+
     if (ngo) {
       bcrypt.compare(password, ngo.password, (err, data) => {
         if (err) throw err;
@@ -82,8 +87,8 @@ authController.ngoLogin = async function (req, res) {
           session.userEmail = ngo.email;
           session.role = "ngo";
           console.log(req.session);
-          // res.render("ngo-view.ejs");
-          // res.render("ngo-donorview.ejs");
+          console.log("hello session");
+
           res.redirect("ngo/donorview");
           console.log(req.session);
           //return res.render("ngo-view.ejs");}
@@ -111,6 +116,7 @@ authController.donorRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newdonorDoc = new donorModel({
+        active: true,
         name: req.body.donorname,
         email: req.body.email,
         contact: req.body.contact,
@@ -119,6 +125,7 @@ authController.donorRegister = async function (req, res) {
         dod: req.body.dod,
         password: hashedpassword,
       });
+      console.log(req.body);
 
       console.log("to save");
       try {
@@ -128,6 +135,7 @@ authController.donorRegister = async function (req, res) {
         console.log("save errror");
         console.log("err", err);
       }
+      console.log("register success");
 
       res.redirect("/donor-login");
     } else {
@@ -148,6 +156,7 @@ authController.ngoRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newNgoDoc = new ngoModel({
+        active: true,
         name: req.body.ngoName,
         email: req.body.email,
         contact: req.body.contact,

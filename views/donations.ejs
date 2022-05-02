@@ -344,7 +344,7 @@
     $( document ).ready(function() {
       $('.donation-status').on('change', function() {
 
-        that = $(this);
+        let that = $(this);
         if (confirm("Are you sure, You want change the donation status?") == true) {
 
           $(this).attr('disabled', 'disabled');
@@ -357,7 +357,7 @@
           .done(function(data) {
             alert("Donation status updated!");
             //window.location = window.location;
-            if ('close' != $(this).val()) {
+            if ('close' != that.val()) {
               that.removeAttr('disabled');
             }
           })
