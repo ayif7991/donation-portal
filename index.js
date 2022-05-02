@@ -65,7 +65,9 @@ app.post("/ngo-register", authController.ngoRegister);
 app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
 app.get("/admin/ngo-list", adminController.ngoList);
+app.put("/admin/ngo-list/:id", adminController.ngoUpdate);
 app.get("/admin/donor-list", adminController.donorList);
+app.put("/admin/donor-list/:id", adminController.donorUpdate);
 app.get("/admin/donation-list", adminController.donationList);
 // <<<<<< NGO >>>>>>
 app.get("/ngo/profile", ngoController.profile);

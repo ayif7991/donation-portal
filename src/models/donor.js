@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const donorSchema = new mongoose.Schema({
-  active: {
+  status: {
     type: String,
   },
   name: {

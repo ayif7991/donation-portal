@@ -1,4 +1,5 @@
-const donationModel = require("../src/models/donation"),
+const mongoose = require("mongoose"),
+  donationModel = require("../src/models/donation"),
   ngoModel = require("../src/models/ngo"),
   donorModel = require("../src/models/donor");
 
@@ -19,6 +20,40 @@ adminController.donorList = function (req, res) {
     res.render("donor-list.ejs", {
       userData: data,
     });
+  });
+};
+adminController.donorUpdate = async function (req, res) {
+  const newId = new mongoose.Types.ObjectId(req.body.id);
+  await donorModel.updateOne(
+    {
+      _id: newId,
+    },
+    {
+      $set: {
+        status: req.body.status,
+      },
+    }
+  );
+
+  res.send({
+    status: "success",
+  });
+};
+adminController.ngoUpdate = async function (req, res) {
+  const newId = new mongoose.Types.ObjectId(req.body.id);
+  await ngoModel.updateOne(
+    {
+      _id: newId,
+    },
+    {
+      $set: {
+        status: req.body.status,
+      },
+    }
+  );
+
+  res.send({
+    status: "success",
   });
 };
 

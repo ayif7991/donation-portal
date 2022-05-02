@@ -248,13 +248,8 @@
                     <% } %>
                 </table>
                 <!-- End Table with stripped rows -->
-              </div>
-          
-
-                
-
-            
-              </div>
+              </div>              
+                         </div>
             </div>
           </div>
         </div>
@@ -299,34 +294,34 @@
     <script src="/public/js/jquery.min.js"></script>
     <script type="text/javascript">
       $( document ).ready(function() {
-        $('.isActive').on('change', function() {
+      $('.isActive').on('change', function() {
+
+        let that = $(this);
+        if (confirm("Are you sure, You want change the status?") == true) {
+
           $(this).attr('disabled', 'disabled');
-  
-          let that = $(this);
-          if (confirm("Are you sure, You want change the status?") == true) {
-  
-            const activeId = $(this).attr('id');
-            $.ajax({
-              url: '/donor/donation/' + activeId,
-              method: 'PUT',
-              data: {id: activeId, status: $(this).val()}
-            })
-            .done(function(data) {
-              alert(" status updated!");
-              window.location = window.location;
-              // if ('close' != that.val()) {
-              //   that.removeAttr('disabled');
-              // }
-            })
-            .fail(function(jqXHR, textStatus ) {
-              alert("Donation status update failed!");
-              window.location = window.location;
-            });
-          } else {
+          const Id = $(this).attr('id');
+          $.ajax({
+            url: '/admin/donor-list/' + Id,
+            method: 'PUT',
+            data: {id: Id, status: $(this).val()}
+          })
+          .done(function(data) {
+            alert(" status updated!");
             window.location = window.location;
-          }
-        });
+            // if ('active' != that.val()) {
+            //   that.removeAttr('disabled');
+            // }
+          })
+          .fail(function(jqXHR, textStatus ) {
+            alert(" status update failed!");
+            window.location = window.location;
+          });
+        } else {
+          window.location = window.location;
+        }
       });
+    });
     </script>
   </body>
 </html>

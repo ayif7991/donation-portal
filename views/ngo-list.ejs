@@ -222,6 +222,22 @@
                       <td><%=data.email %></td>
                       <td><%=data.location %></td>
                       <td><%=data.contact %></td>
+                      <td>
+                        <%
+                        selectedactive = selectedsuspended = '';
+                        if('active' == data.status) {
+                          selectedactive = 'selected';
+                        }
+                        else{
+                          selectedsuspended = 'selected';
+                        }
+                        %>
+                        <select id="<%=data._id%>" class="isActive">
+                          <option <%=selectedactive%> value="active">Active</option>
+                          <option  <%=selectedsuspended%> value="suspended">Suspended</option>
+                        </select>
+                    </td>
+                      </td>
                        <td><a href="/delete/<%=data.id%>">Delete</a></td>
                     </tr>
                     <% i++; }) %> <% } else{ %>
@@ -279,5 +295,37 @@
 
     <!-- Template Main JS File -->
     <script src="/public/niceadmin/assets/js/main.js"></script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+      $('.isActive').on('change', function() {
+
+        let that = $(this);
+        if (confirm("Are you sure, You want change the status?") == true) {
+
+          $(this).attr('disabled', 'disabled');
+          const Id = $(this).attr('id');
+          $.ajax({
+            url: '/admin/ngo-list/' + Id,
+            method: 'PUT',
+            data: {id: Id, status: $(this).val()}
+          })
+          .done(function(data) {
+            alert(" status updated!");
+            window.location = window.location;
+            // if ('active' != that.val()) {
+            //   that.removeAttr('disabled');
+            // }
+          })
+          .fail(function(jqXHR, textStatus ) {
+            alert(" status update failed!");
+            window.location = window.location;
+          });
+        } else {
+          window.location = window.location;
+        }
+      });
+    });
+    </script>
   </body>
 </html>
