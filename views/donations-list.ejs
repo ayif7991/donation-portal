@@ -221,17 +221,16 @@
                       <td><%=data.dod %></td>
                       <td>
                         <%
-                          selectedOpen = selectedPending = selectedClose = selectDisable = '';
+                          selectedOpen = selectedPending = selectedClose = '';
                           if ('close' == data.status) {
                             selectedClose = 'selected';
-                            selectDisable = 'disabled';
                           } else if ('pending' == data.status) {
                             selectedPending = 'selected';
                           } else {
                             selectedOpen = 'selected';
                           }
                         %>
-                        <select id="<%=data._id%>" <%=selectDisable%> class="donation-status">
+                        <select id="<%=data._id%>" class="donation-status">
                           <option <%=selectedOpen%> value="open">Open</option>
                           <option  <%=selectedPending%> value="pending">Pending Collection</option>
                           <option  <%=selectedClose%> value="close">Close</option>
@@ -298,11 +297,11 @@
   <script type="text/javascript">
     $( document ).ready(function() {
       $('.donation-status').on('change', function() {
+        $(this).attr('disabled', 'disabled');
 
         let that = $(this);
         if (confirm("Are you sure, You want change the donation status?") == true) {
 
-          $(this).attr('disabled', 'disabled');
           const donationId = $(this).attr('id');
           $.ajax({
             url: '/donor/donation/' + donationId,
@@ -311,10 +310,10 @@
           })
           .done(function(data) {
             alert("Donation status updated!");
-            //window.location = window.location;
-            if ('close' != that.val()) {
-              that.removeAttr('disabled');
-            }
+            window.location = window.location;
+            // if ('close' != that.val()) {
+            //   that.removeAttr('disabled');
+            // }
           })
           .fail(function(jqXHR, textStatus ) {
             alert("Donation status update failed!");

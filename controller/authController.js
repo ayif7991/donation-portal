@@ -116,7 +116,7 @@ authController.donorRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newdonorDoc = new donorModel({
-        active: true,
+        active: "true",
         name: req.body.donorname,
         email: req.body.email,
         contact: req.body.contact,
@@ -156,7 +156,7 @@ authController.ngoRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newNgoDoc = new ngoModel({
-        active: true,
+        active: "true",
         name: req.body.ngoName,
         email: req.body.email,
         contact: req.body.contact,

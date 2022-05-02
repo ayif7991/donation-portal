@@ -182,7 +182,7 @@
 
     <main id="main" class="main">
       <div class="pagetitle">
-        <h1>NGO LIST</h1>
+        <h1>DONORS LIST</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -212,6 +212,8 @@
                       <th scope="col">Email Address</th>
                       <th scope="col">Location</th>
                       <th scope="col">Contact</th>
+                      <th scope="col">isActive</th>
+
                     </tr>
                   </thead>
                   <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
@@ -221,6 +223,22 @@
                       <td><%=data.email %></td>
                       <td><%=data.location %></td>
                       <td><%=data.contact %></td>
+                      <td>
+                        <%
+                        selectedactive = selectedsuspended = '';
+                        if('active' == data.status) {
+                          selectedactive = 'selected';
+                        }
+                        else{
+                          selectedsuspended = 'selected';
+                        }
+                        %>
+                        <select id="<%=data._id%>" class="isActive">
+                          <option <%=selectedactive%> value="active">Active</option>
+                          <option  <%=selectedsuspended%> value="suspended">Suspended</option>
+                        </select>
+                    </td>
+                      </td>
                       <td><a href="/delete/<%=data.id%>">Delete</a></td>
                     </tr>
                     <% i++; }) %> <% } else{ %>
@@ -278,5 +296,37 @@
 
     <!-- Template Main JS File -->
     <script src="/public/niceadmin/assets/js/main.js"></script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+        $('.isActive').on('change', function() {
+          $(this).attr('disabled', 'disabled');
+  
+          let that = $(this);
+          if (confirm("Are you sure, You want change the status?") == true) {
+  
+            const activeId = $(this).attr('id');
+            $.ajax({
+              url: '/donor/donation/' + activeId,
+              method: 'PUT',
+              data: {id: activeId, status: $(this).val()}
+            })
+            .done(function(data) {
+              alert(" status updated!");
+              window.location = window.location;
+              // if ('close' != that.val()) {
+              //   that.removeAttr('disabled');
+              // }
+            })
+            .fail(function(jqXHR, textStatus ) {
+              alert("Donation status update failed!");
+              window.location = window.location;
+            });
+          } else {
+            window.location = window.location;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
