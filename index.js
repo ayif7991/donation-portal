@@ -61,7 +61,6 @@ app.post("/ngo-login", authController.ngoLogin);
 app.get("/ngo-register", staticController.ngoRegister);
 app.post("/ngo-register", authController.ngoRegister);
 
-
 // <<<<< ACL >>>>>
 app.use(acl.authorize);
 // <<<<< ADMIN >>>>>
