@@ -5,12 +5,11 @@ const bcrypt = require("bcrypt"),
   acl = require("express-acl");
 
 const mongooseConn = require("./src/db/mongoose"),
-  donorModel = require("./src/models/donor"),
-  ngoModel = require("./src/models/ngo"),
   staticController = require("./controller/staticController"),
   adminController = require("./controller/adminController"),
   ngoController = require("./controller/ngoController"),
-  donorController = require("./controller/donorController");
+  donorController = require("./controller/donorController"),
+  authController = require("./controller/authController");
 
 const app = express();
 const port = 3000;
@@ -37,208 +36,31 @@ acl.config();
 //To serve the Static pages
 app.use("/public", express.static("public"));
 
-app.get("/testmongo", function (req, res) {
-  res.render("ngo-donorview.ejs");
-});
-
 // <<<<< PUBLIC >>>>>
 app.get("/", staticController.homePage);
+app.get("/faq", staticController.faq);
 //app.get("/index", staticController.homePage);
 
 app.get("/logout", staticController.logout);
 
-app.get("/faq", staticController.faq);
+//To serve the admin login page
+app.get("/admin", staticController.adminLogin);
+app.post("/admin", authController.adminLogin);
 
-//To serve the admin page
-app.get("/admin", function (req, res) {
-  res.render("admin.ejs");
-});
-
-app.post("/admin", async function (req, res) {
-  let name = req.body.name;
-  let password = req.body.password;
-  console.log(req.body);
-
-  if (name === "admin" && password === "admin123") {
-    console.log("oke fine");
-    req.session.role = "admin";
-    req.session.name = "Admin";
-    console.log("admin session created");
-    ngoModel.find({}, function (err, data) {
-      var userData = ngoModel.find({});
-      res.render("ngo-list.ejs", {
-        userData: data,
-      });
-    });
-  } else {
-    res.redirect("/admin");
-    //res.render("pages-error-404.ejs");
-  }
-
-  // console.log("oke fine");
-  // return res.sendFile("./view/adminview.html", { root: __dirname });
-});
-
-app.get("/donor-login", function (req, res) {
-  res.sendFile("./views/donor-login.html", { root: __dirname });
-});
-
-app.post("/donor-login", async function (req, res) {
-  try {
-    const email = req.body.email;
-    const password = req.body.password;
-    console.log(`${email}${password}`);
-
-    const donor = await donorModel.findOne({ email: email });
-
-    console.log("donor");
-    if (donor) {
-      bcrypt.compare(password, donor.password, (err, data) => {
-        if (err) throw err;
-        if (data) {
-          let session = req.session;
-          session.userId = donor._id;
-          session.userName = donor.name;
-          session.userEmail = donor.email;
-          session.role = "donor";
-          console.log(req.session.userId);
-          res.redirect("donor/donations");
-          //return res.status(200).json({ msg: "Login success" });
-        } else {
-          return res.status(401).json({ msg: "Invalid credencial" });
-          // return res.render("pages-error-404.ejs");
-        }
-      });
-    } else {
-      return res.status(401).json({ msg: "Invalid credencial" });
-    }
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+app.get("/donor-login", staticController.donorLoginGet);
+app.post("/donor-login", authController.donorLogin);
 
 //To serve donatesignup page
-app.get("/donor-register", function (req, res) {
-  res.sendFile("./views/donor-register.html", { root: __dirname });
-});
-
-app.post("/donor-register", async function (req, res) {
-  try {
-    console.log(req.body);
-    let password = req.body.password;
-    let confPassword = req.body.confirmpassword;
-    req.session.role = "donor";
-
-    if (password === confPassword) {
-      const salt = await bcrypt.genSalt(10);
-      hashedpassword = await bcrypt.hash(password, salt);
-      const newdonorDoc = new donorModel({
-        name: req.body.donorname,
-        email: req.body.email,
-        contact: req.body.contact,
-        location: req.body.location,
-        //  donation: req.body.donation,
-        dod: req.body.dod,
-        password: hashedpassword,
-      });
-
-      console.log("to save");
-      try {
-        let x = await newdonorDoc.save();
-      } catch (err) {
-        res.send({});
-        console.log("save errror");
-        console.log("err", err);
-      }
-
-      res.redirect("/donor-login");
-    } else {
-      res.send("mismatch password");
-    }
-  } catch (err) {
-    console.error("dono-signup failed", err);
-    res.status(400).send(err);
-  }
-});
+app.get("/donor-register", staticController.donorRegisterGet);
+app.post("/donor-register", staticController.donorRegisterPost);
 
 //To serve ngo login page
-app.get("/ngo-login", function (req, res) {
-  console.log("login page");
-  res.sendFile("./views/ngo-login.html", { root: __dirname });
-});
+app.get("/ngo-login", staticController.ngoLogin);
+app.post("/ngo-login", authController.ngoLogin);
 
-app.post("/ngo-login", async function (req, res) {
-  try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const ngo = await ngoModel.findOne({ email: email });
-    console.log(ngo);
-    if (ngo) {
-      bcrypt.compare(password, ngo.password, (err, data) => {
-        if (err) throw err;
-        if (data) {
-          let session = req.session;
-          session.userId = ngo._id;
-          session.userName = ngo.name;
-          session.userEmail = ngo.email;
-          session.role = "ngo";
-          console.log(req.session);
-          // res.render("ngo-view.ejs");
-          // res.render("ngo-donorview.ejs");
-          res.redirect("ngo/donorview");
-          console.log(req.session);
-          //return res.render("ngo-view.ejs");}
-        } else {
-          return res.status(401).json({ msg: "Invalid credencial" });
-          // return res.render("pages-error-404.ejs");
-        }
-      });
-    } else {
-      return res.status(401).json({ msg: "Invalid credencial" });
-    }
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+app.get("/ngo-register", staticController.ngoRegister);
+app.post("/ngo-register", authController.ngoRegister);
 
-app.post("/ngo-register", async function (req, res) {
-  try {
-    console.log(req.body);
-    let password = req.body.password;
-    let confPassword = req.body.confirmpassword;
-    if (password === confPassword) {
-      const salt = await bcrypt.genSalt(10);
-      hashedpassword = await bcrypt.hash(password, salt);
-      const newNgoDoc = new ngoModel({
-        name: req.body.ngoName,
-        email: req.body.email,
-        contact: req.body.contact,
-        location: req.body.location,
-        password: hashedpassword,
-      });
-
-      try {
-        let x = await newNgoDoc.save();
-      } catch (err) {
-        res.send({});
-        console.log("save errror");
-        console.log("err", err);
-      }
-
-      res.redirect("/ngo-login");
-    } else {
-      res.send("mismatch password");
-    }
-  } catch (err) {
-    console.error("ngo-signup failed", err);
-    res.status(400).send(err);
-  }
-});
-
-//To serve ngo signup page
-app.get("/ngo-register", function (req, res) {
-  res.sendFile("./views/ngo-register.html", { root: __dirname });
-});
 
 // <<<<< ACL >>>>>
 app.use(acl.authorize);
