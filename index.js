@@ -41,18 +41,18 @@ app.get("/", staticController.homePage);
 app.get("/faq", staticController.faq);
 //app.get("/index", staticController.homePage);
 
-app.get("/logout", staticController.logout);
+app.get("/logout", authController.logout);
 
 //To serve the admin login page
 app.get("/admin", staticController.adminLogin);
 app.post("/admin", authController.adminLogin);
 
-app.get("/donor-login", staticController.donorLoginGet);
+app.get("/donor-login", staticController.donorLogin);
 app.post("/donor-login", authController.donorLogin);
 
 //To serve donatesignup page
-app.get("/donor-register", staticController.donorRegisterGet);
-app.post("/donor-register", staticController.donorRegisterPost);
+app.get("/donor-register", staticController.donorRegister);
+app.post("/donor-register", staticController.donorRegister);
 
 //To serve ngo login page
 app.get("/ngo-login", staticController.ngoLogin);
