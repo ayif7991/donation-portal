@@ -312,9 +312,9 @@
           })
           .done(function(data) {
             alert(" status updated!");
-            window.location = window.location;
+            that.removeAttr('disabled');
+            // window.location = window.location;
             // if ('active' != that.val()) {
-            //   that.removeAttr('disabled');
             // }
           })
           .fail(function(jqXHR, textStatus ) {
