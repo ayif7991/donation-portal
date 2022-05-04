@@ -17,18 +17,17 @@ authController.adminLogin = async function (req, res) {
   let name = req.body.name;
   let password = req.body.password;
   console.log(req.body);
-
   if (name === "admin" && password === "admin123") {
     req.session.role = "admin";
     req.session.name = "Admin";
     console.log("admin session created");
-    res.send({status: 'success'});
+    res.send({ status: "success" });
   } else {
-    res.send({status: 'failed', message: 'Credencials mismatch, Please try again'});
+    res.send({
+      status: "failed",
+      message: "Credencials mismatch, Please try again",
+    });
   }
-
-  // console.log("oke fine");
-  // return res.sendFile("./view/adminview.html", { root: __dirname });
 };
 
 authController.donorLogin = async function (req, res) {
@@ -51,15 +50,19 @@ authController.donorLogin = async function (req, res) {
           session.userEmail = donor.email;
           session.role = "donor";
           console.log(req.session.userId);
-          res.redirect("donor/donations");
-          //return res.status(200).json({ msg: "Login success" });
+          res.send({ status: "success" });
         } else {
-          return res.status(401).json({ msg: "Invalid credencial" });
-          // return res.render("pages-error-404.ejs");
+          res.send({
+            status: "failed",
+            message: "Credencials mismatch, Please try again",
+          });
         }
       });
     } else {
-      return res.status(401).json({ msg: "Invalid credencial" });
+      res.send({
+        status: "failed",
+        message: "Credencials mismatch, Please try again",
+      });
     }
   } catch (error) {
     res.status(400).send(error);
@@ -72,7 +75,6 @@ authController.ngoLogin = async function (req, res) {
     const password = req.body.password;
     const ngo = await ngoModel.findOne({ email: email, active: true });
     console.log(ngo);
-
     if (ngo) {
       bcrypt.compare(password, ngo.password, (err, data) => {
         if (err) throw err;
@@ -84,17 +86,20 @@ authController.ngoLogin = async function (req, res) {
           session.role = "ngo";
           console.log(req.session);
           console.log("hello session");
-
-          res.redirect("ngo/donorview");
+          res.send({ status: "success" });
           console.log(req.session);
-          //return res.render("ngo-view.ejs");}
         } else {
-          return res.status(401).json({ msg: "Invalid credencial" });
-          // return res.render("pages-error-404.ejs");
+          res.send({
+            status: "failed",
+            message: "Credencials mismatch, Please try again",
+          });
         }
       });
     } else {
-      return res.status(401).json({ msg: "Invalid credencial" });
+      res.send({
+        status: "failed",
+        message: "Credencials mismatch, Please try again",
+      });
     }
   } catch (error) {
     res.status(400).send(error);

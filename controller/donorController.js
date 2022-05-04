@@ -5,8 +5,14 @@ const path = require("path"),
 
 let donorController = {};
 
-donorController.profile = function (req, res) {
-  res.render("donor-profile.ejs");
+donorController.profile = async function (req, res) {
+  // let userId = req.session.userId;
+  // var donorData = await donorModel.find({ userId });
+  // console.log(userId);
+  // // console.log(donorData);
+  // res.render("donor-profile.ejs", {
+  //   donorData: donorData,
+  // });
 };
 
 donorController.donations = async function (req, res) {
@@ -14,6 +20,8 @@ donorController.donations = async function (req, res) {
   var donationData = await donationModel.find({
     donorId: userId,
   });
+  console.log(userId);
+
   console.log(donationData);
 
   res.render("donations.ejs", {

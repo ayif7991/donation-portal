@@ -98,6 +98,7 @@
                       action="ngo-login"
                       class="row g-3 needs-validation"
                       novalidate
+                      id="loginForm"
                     >
                       <div class="col-12">
                         <label for="yourUsername" class="form-label"
@@ -152,7 +153,7 @@
                       </div>
                       <div class="col-12">
                         <button class="btn btn-primary w-100" type="submit">
-                          <a href="ngo-view"></a>Login
+                          Login
                         </button>
                       </div>
                       <div class="col-12">
@@ -197,5 +198,27 @@
 
     <!-- Template Main JS File -->
     <script src="/public/niceadmin/assets/js/main.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#loginForm").submit(function (e) {
+          //prevent Default functionality
+          e.preventDefault();
+          if ($("#yourEmail").val().length && $("#yourPassword").val().length) {
+            $.post("/ngo-login", $("#loginForm").serialize())
+              .done(function (data) {
+                if (data.status == "success") {
+                  window.location = "/ngo/donorview";
+                } else {
+                  alert(data.message);
+                }
+              })
+              .fail(function (e) {
+                console.log(e);
+                alert("Login failed, please try again");
+              });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

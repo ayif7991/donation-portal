@@ -98,6 +98,7 @@
                       action="donor-login"
                       class="row g-3 needs-validation"
                       novalidate
+                      id="loginForm"
                     >
                       <div class="col-12">
                         <label for="yourUsername" class="form-label"
@@ -198,5 +199,28 @@
 
     <!-- Template Main JS File -->
     <script src="/public/niceadmin/assets/js/main.js"></script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#loginForm").submit(function (e) {
+          //prevent Default functionality
+          e.preventDefault();
+          if ($("#yourEmail").val().length && $("#yourPassword").val().length) {
+            $.post("/donor-login", $("#loginForm").serialize())
+              .done(function (data) {
+                if (data.status == "success") {
+                  window.location = "/donor/donations";
+                } else {
+                  alert(data.message);
+                }
+              })
+              .fail(function (e) {
+                console.log(e);
+                alert("Login failed, please try again");
+              });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

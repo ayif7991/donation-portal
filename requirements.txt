@@ -28,3 +28,9 @@ NGO=====>>>>{reg,login,contN,donORVIEW,profile,faq}
                 alert($('div#status').text());
       } 
 </script>-->
+
+ <!-- <% if(donorData.length!=0){ var i=1; donorData.forEach(function(data) { %> -->
+                      <div class="col-lg-9 col-md-8"><%=data.name %></div>
+                      <!-- <% i++; }) %> <% } else{ %> -->
+                    </div>
+                    <!-- <% } %> --> -->
