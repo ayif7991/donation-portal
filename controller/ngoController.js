@@ -6,8 +6,14 @@ const path = require("path"),
 
 let ngoController = {};
 
-ngoController.profile = function (req, res) {
-  res.render("ngo-profile.ejs");
+ngoController.profile = async function (req, res) {
+  let userId = req.session.userId;
+  var ngoData = await ngoModel.find({ _id: userId });
+  console.log(userId);
+  console.log(ngoData);
+  res.render("ngo-profile.ejs", {
+    ngoData: ngoData,
+  });
 };
 
 ngoController.donorView = async function (req, res) {

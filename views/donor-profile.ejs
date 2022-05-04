@@ -282,17 +282,15 @@
 
       <section class="section profile">
         <div class="row">
-          <div class="col-xl-4">
+          <div class="col-xl-8">
             <div class="card">
-              <div class="card-body profile-card pt-4 d-flex flex-column align-items-center" >
-                      <div class="col-lg-9 col-md-8">
-                        <!-- <% donorData.forEach(function (data) { %>
-                        <%=data.name %>
-                        <% }) %>  -->
-                        </div>
-                    </div>
+              <div
+                class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                <% donorData.forEach(function (data) { %>
+                <h2> <%=data.name %>   </h2>
               </div>
             </div>
+          </div>   
           </div>
 
           <div class="col-xl-8">
@@ -349,24 +347,31 @@
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Full Name</div>
-                      <div class="col-lg-9 col-md-8"></div>
+                      <div class="col-lg-9 col-md-8">
+                        <%=data.name %>
+                      </div>
                     </div>
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Address</div>
-                      <div class="col-lg-9 col-md-8">
+                      <div class="col-lg-9 col-md-8"><%=data.location %>
                         </div>
                     </div>
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Phone</div>
+                      <div class="col-lg-9 col-md-8"><%=data.contact %>
+                      </div>
+
                     </div>
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Email</div>
-                      
+                      <div class="col-lg-9 col-md-8"><%=data.email %>
+                      </div>
                     </div>
                   </div>
+                  <% }) %> 
 
                   <div
                     class="tab-pane fade profile-edit pt-3"

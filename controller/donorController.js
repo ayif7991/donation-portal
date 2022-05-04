@@ -6,13 +6,13 @@ const path = require("path"),
 let donorController = {};
 
 donorController.profile = async function (req, res) {
-  // let userId = req.session.userId;
-  // var donorData = await donorModel.find({ userId });
-  // console.log(userId);
-  // // console.log(donorData);
-  // res.render("donor-profile.ejs", {
-  //   donorData: donorData,
-  // });
+  let userId = req.session.userId;
+  var donorData = await donorModel.find({ _id: userId });
+  console.log(userId);
+  console.log(donorData);
+  res.render("donor-profile.ejs", {
+    donorData: donorData,
+  });
 };
 
 donorController.donations = async function (req, res) {
