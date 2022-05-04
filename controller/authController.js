@@ -19,14 +19,12 @@ authController.adminLogin = async function (req, res) {
   console.log(req.body);
 
   if (name === "admin" && password === "admin123") {
-    console.log("oke fine");
     req.session.role = "admin";
     req.session.name = "Admin";
     console.log("admin session created");
-    res.redirect("/admin/ngo-list");
+    res.send({status: 'success'});
   } else {
-    res.redirect("/admin");
-    //res.render("pages-error-404.ejs");
+    res.send({status: 'failed', message: 'Credencials mismatch, Please try again'});
   }
 
   // console.log("oke fine");
