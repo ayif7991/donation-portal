@@ -17,3 +17,14 @@ DONOR=====>>>>{reg,login,contD,donations,donate(3),profile,faq}
 
 NGO=====>>>>{reg,login,contN,donORVIEW,profile,faq}
 1.ngo-register 2.ngo-login(reg->login) 3.login->donortable
+
+
+
+ <!-- <div id='status' class='invisible'><%= errormessage %></div>
+
+    <script>
+      if($('div#status').text()!='')
+      {
+                alert($('div#status').text());
+      } 
+</script>-->

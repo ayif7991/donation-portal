@@ -4,6 +4,9 @@ const path = require("path"),
   donorModel = require("../src/models/donor");
 
 let authController = {};
+// authController.x = "hi";
+// authController.y = "hio";
+// console.log(authController);
 
 authController.logout = (req, res) => {
   req.session.destroy();
@@ -20,12 +23,7 @@ authController.adminLogin = async function (req, res) {
     req.session.role = "admin";
     req.session.name = "Admin";
     console.log("admin session created");
-    ngoModel.find({}, function (err, data) {
-      var userData = ngoModel.find({});
-      res.render("ngo-list.ejs", {
-        userData: data,
-      });
-    });
+    res.redirect("/admin/ngo-list");
   } else {
     res.redirect("/admin");
     //res.render("pages-error-404.ejs");
@@ -104,8 +102,8 @@ authController.ngoLogin = async function (req, res) {
     res.status(400).send(error);
   }
 };
-
 authController.donorRegister = async function (req, res) {
+  //authController.donorRegister = async function (req, res, errormessage) {
   try {
     console.log(req.body);
     let password = req.body.password;
@@ -139,6 +137,8 @@ authController.donorRegister = async function (req, res) {
 
       res.redirect("/donor-login");
     } else {
+      // res.send('<script>alert("mismatch password")</script>');
+      //  res.render("donor-register", { errormessage: "mismatch password" });
       res.send("mismatch password");
     }
   } catch (err) {
