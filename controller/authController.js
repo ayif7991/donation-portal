@@ -44,7 +44,6 @@ authController.donorLogin = async function (req, res) {
         if (err) throw err;
         if (data) {
           let session = req.session;
-          9;
           session.userId = donor._id;
           session.userName = donor.name;
           session.userEmail = donor.email;

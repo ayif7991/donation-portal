@@ -59,8 +59,26 @@ adminController.ngoUpdate = async function (req, res) {
 
 adminController.donationList = async function (req, res) {
   var donationData = await donationModel.find({});
+  var donors = await donorModel.find({});
+
+  console.log(donationData);
+  console.log(donors);
+
+  var donations = [], donorId;
+  donationData.forEach(function(donation) {
+    donation = JSON.parse(JSON.stringify(donation));
+    donors.forEach(function(donor) {
+      donor = JSON.parse(JSON.stringify(donor));
+      if (donation.donorId === donor._id.toString()) {
+        x = Object.assign(donor, donation);
+        donations.push(x);
+      }
+    });
+  });
+  console.log(donations);
+
   res.render("donations-list.ejs", {
-    donationData: donationData,
+    donationData: donations,
   });
 };
 
