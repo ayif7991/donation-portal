@@ -18,19 +18,10 @@ DONOR=====>>>>{reg,login,contD,donations,donate(3),profile,faq}
 NGO=====>>>>{reg,login,contN,donORVIEW,profile,faq}
 1.ngo-register 2.ngo-login(reg->login) 3.login->donortable
 
+set drop down
+if suspended then cant login
+faq
+edit profile
+change password
 
-
- <!-- <div id='status' class='invisible'><%= errormessage %></div>
-
-    <script>
-      if($('div#status').text()!='')
-      {
-                alert($('div#status').text());
-      } 
-</script>-->
-
- <!-- <% if(donorData.length!=0){ var i=1; donorData.forEach(function(data) { %> -->
-                      <div class="col-lg-9 col-md-8"><%=data.name %></div>
-                      <!-- <% i++; }) %> <% } else{ %> -->
-                    </div>
-                    <!-- <% } %> --> -->
+ 
