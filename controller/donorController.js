@@ -100,7 +100,7 @@ donorController.donateEducationPost = function (req, res) {
     donorId: req.session.userId,
     status: "open",
     type: "Books,Stationary and more",
-    active: true,
+    isActive: true,
     aim: req.body.aim,
     select: req.body.select,
     specific: req.body.specific,

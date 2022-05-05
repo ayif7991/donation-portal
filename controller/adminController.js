@@ -30,7 +30,7 @@ adminController.donorUpdate = async function (req, res) {
     },
     {
       $set: {
-        status: req.body.status,
+        isActive: req.body.status,
       },
     }
   );
@@ -47,7 +47,7 @@ adminController.ngoUpdate = async function (req, res) {
     },
     {
       $set: {
-        status: req.body.status,
+        isActive: req.body.status,
       },
     }
   );

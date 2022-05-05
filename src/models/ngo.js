@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ngoSchema = new mongoose.Schema({
-  active: {
+  isActive: {
     type: Boolean,
   },
   name: {

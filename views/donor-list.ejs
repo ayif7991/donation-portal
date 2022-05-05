@@ -226,7 +226,7 @@
                       <td>
                         <%
                         selectedactive = selectedsuspended = '';
-                        if('active' == data.status) {
+                        if(true == data.isActive) {
                           selectedactive = 'selected';
                         }
                         else{
@@ -234,8 +234,8 @@
                         }
                         %>
                         <select id="<%=data._id%>" class="isActive">
-                          <option <%=selectedactive%> value="active">Active</option>
-                          <option  <%=selectedsuspended%> value="suspended">Suspended</option>
+                          <option <%=selectedactive%> value="true">Active</option>
+                          <option  <%=selectedsuspended%> value="false">Suspended</option>
                         </select>
                     </td>
                       </td>
