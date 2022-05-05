@@ -7,12 +7,12 @@ const path = require("path"),
 let ngoController = {};
 
 ngoController.profile = async function (req, res) {
-  let userId = req.session.userId;
-  var ngoData = await ngoModel.find({ _id: userId });
+  let userId = new mongoose.Types.ObjectId(req.session.userId);
+  var ngoData = await ngoModel.findOne({ _id: userId });
   console.log(userId);
   console.log(ngoData);
   res.render("ngo-profile.ejs", {
-    ngoData: ngoData,
+    data: ngoData,
   });
 };
 
