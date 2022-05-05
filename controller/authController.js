@@ -36,7 +36,11 @@ authController.donorLogin = async function (req, res) {
     const password = req.body.password;
     console.log(`${email}${password}`);
 
-    const donor = await donorModel.findOne({ email: email, status: active });
+    const donor = await donorModel.findOne({
+      email: email,
+      isActive: true,
+    });
+    console.log(`${email}`);
 
     console.log("donor");
     if (donor) {
@@ -55,6 +59,7 @@ authController.donorLogin = async function (req, res) {
             status: "failed",
             message: "Credencials mismatch, Please try again",
           });
+          console.log("11");
         }
       });
     } else {
@@ -62,17 +67,19 @@ authController.donorLogin = async function (req, res) {
         status: "failed",
         message: "Credencials mismatch, Please try again",
       });
+      console.log("21");
     }
   } catch (error) {
     res.status(400).send(error);
   }
+  console.log("31");
 };
 
 authController.ngoLogin = async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const ngo = await ngoModel.findOne({ email: email, status: active });
+    const ngo = await ngoModel.findOne({ email: email, isActive: true });
     console.log(ngo);
     if (ngo) {
       bcrypt.compare(password, ngo.password, (err, data) => {
@@ -92,6 +99,7 @@ authController.ngoLogin = async function (req, res) {
             status: "failed",
             message: "Credencials mismatch, Please try again",
           });
+          console.log("11");
         }
       });
     } else {
@@ -99,10 +107,12 @@ authController.ngoLogin = async function (req, res) {
         status: "failed",
         message: "Credencials mismatch, Please try again",
       });
+      console.log("22");
     }
   } catch (error) {
     res.status(400).send(error);
   }
+  console.log("33");
 };
 authController.donorRegister = async function (req, res) {
   //authController.donorRegister = async function (req, res, errormessage) {
@@ -116,7 +126,7 @@ authController.donorRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newdonorDoc = new donorModel({
-        status: "active",
+        isActive: true,
         name: req.body.donorname,
         email: req.body.email,
         contact: req.body.contact,
@@ -158,7 +168,7 @@ authController.ngoRegister = async function (req, res) {
       const salt = await bcrypt.genSalt(10);
       hashedpassword = await bcrypt.hash(password, salt);
       const newNgoDoc = new ngoModel({
-        status: "active",
+        isActive: true,
         name: req.body.ngoName,
         email: req.body.email,
         contact: req.body.contact,

@@ -17,16 +17,23 @@ ngoController.profile = async function (req, res) {
 };
 
 ngoController.donorView = async function (req, res) {
-  let userId = req.session.userId;
-  console.log(userId);
-  var donationData = await donationModel.find({ status: "open", active: true });
-  // var donationData = await donationModel.find({
-  //   donorId: userId,
-  // });
-  console.log(donationData);
+  var donationData = await donationModel.find({ status: "open" });
+  var donors = await donorModel.find({});
+  var donations = [],
+    donorId;
+  donationData.forEach(function (donation) {
+    donation = JSON.parse(JSON.stringify(donation));
+    donors.forEach(function (donor) {
+      donor = JSON.parse(JSON.stringify(donor));
+      if (donation.donorId === donor._id.toString()) {
+        x = Object.assign(donor, donation);
+        donations.push(x);
+      }
+    });
+  });
 
   res.render("ngo-donorview.ejs", {
-    donationData: donationData,
+    donationData: donations,
   });
 };
 

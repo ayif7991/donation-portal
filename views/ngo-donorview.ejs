@@ -258,6 +258,9 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
+                      <th scope="col">Name of Donor</th>
+                      <th scope="col">Email of Donor</th>
+                      <th scope="col">Contact of Donor</th>
                       <th scope="col">Type of Donation</th>
                       <th scope="col">Date of Donation</th>
                       <th scope="col">Status</th>
@@ -266,6 +269,9 @@
                   <% if(donationData.length!=0){ var i=1; donationData.forEach(function(data) { %>
                     <tr>
                       <td><%=i; %></td>
+                      <td><%=data.name %></td>
+                      <td><%=data.email %></td>
+                      <td><%=data.contact %></td>
                       <td><%=data.type %></td>
                       <td><%=data.dod %></td>
                       <td>
