@@ -114,6 +114,7 @@ authController.ngoLogin = async function (req, res) {
   }
   console.log("33");
 };
+
 authController.donorRegister = async function (req, res) {
   //authController.donorRegister = async function (req, res, errormessage) {
   try {

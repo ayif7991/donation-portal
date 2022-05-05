@@ -307,14 +307,14 @@
             data: {id: Id, status: $(this).val()}
           })
           .done(function(data) {
-            alert(" status updated!");
+            alert("Status updated!");
             that.removeAttr('disabled');
             // window.location = window.location;
             // if ('active' != that.val()) {
             // }
           })
           .fail(function(jqXHR, textStatus ) {
-            alert(" status update failed!");
+            alert("Status update failed!");
             window.location = window.location;
           });
         } else {

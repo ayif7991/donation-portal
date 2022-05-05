@@ -112,7 +112,6 @@ donorController.donateEducationPost = function (req, res) {
 
   res.redirect("/donor/donations");
 };
-console.log("edu don");
 
 donorController.donorView = function (req, res) {
   donorModel.find({}, function (err, data) {

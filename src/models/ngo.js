@@ -8,7 +8,6 @@ const ngoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   contact: {
     type: Number,
     required: true,
@@ -22,7 +21,6 @@ const ngoSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-
   password: {
     type: String,
     required: true,

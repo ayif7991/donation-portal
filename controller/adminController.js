@@ -7,7 +7,6 @@ let adminController = {};
 
 adminController.ngoList = function (req, res) {
   ngoModel.find({}, function (err, data) {
-    var userData = ngoModel.find({});
     res.render("ngo-list.ejs", {
       userData: data,
     });
@@ -16,12 +15,12 @@ adminController.ngoList = function (req, res) {
 
 adminController.donorList = function (req, res) {
   donorModel.find({}, function (err, data) {
-    var userData = donorModel.find({});
     res.render("donor-list.ejs", {
       userData: data,
     });
   });
 };
+
 adminController.donorUpdate = async function (req, res) {
   const newId = new mongoose.Types.ObjectId(req.body.id);
   await donorModel.updateOne(
@@ -39,6 +38,7 @@ adminController.donorUpdate = async function (req, res) {
     status: "success",
   });
 };
+
 adminController.ngoUpdate = async function (req, res) {
   const newId = new mongoose.Types.ObjectId(req.body.id);
   await ngoModel.updateOne(
