@@ -263,7 +263,7 @@
                       <th scope="col">Contact of Donor</th>
                       <th scope="col">Type of Donation</th>
                       <th scope="col">Date of Donation</th>
-                      <th scope="col">Status</th>
+                      <!-- <th scope="col">Status</th> -->
                     </tr>
                   </thead>
                   <% if(donationData.length!=0){ var i=1; donationData.forEach(function(data) { %>
@@ -274,7 +274,7 @@
                       <td><%=data.contact %></td>
                       <td><%=data.type %></td>
                       <td><%=data.dod %></td>
-                      <td>
+                      <!-- <td>
                         <%
                           selectedOpen = selectedPending = selectedClose = selectDisable = '';
                           if ('close' == data.status) {
@@ -291,7 +291,7 @@
                           <option  <%=selectedPending%> value="pending">Pending Collection</option>
                           <option  <%=selectedClose%> value="close">Close</option>
                         </select>
-                    </td>
+                    </td> -->
                       
                     </tr>
                     <% i++; }) %> <% } else{ %>
