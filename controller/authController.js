@@ -36,7 +36,7 @@ authController.donorLogin = async function (req, res) {
     const password = req.body.password;
     console.log(`${email}${password}`);
 
-    const donor = await donorModel.findOne({ email: email, active: true });
+    const donor = await donorModel.findOne({ email: email, status: active });
 
     console.log("donor");
     if (donor) {
@@ -73,7 +73,7 @@ authController.ngoLogin = async function (req, res) {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const ngo = await ngoModel.findOne({ email: email, active: true });
+    const ngo = await ngoModel.findOne({ email: email, status: active });
     console.log(ngo);
     if (ngo) {
       bcrypt.compare(password, ngo.password, (err, data) => {
